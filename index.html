@@ -1,0 +1,3605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Balmuildy Assembly</title>
+
+<link rel="icon"
+      href="http://www.balmuildy.e-dunbarton.sch.uk/media/4775/balmuildy.png">
+
+<style>
+
+:root{
+    --accent:#5b5fc7;
+    --accent-dark:#4648a8;
+    --bg:#f5f5f7;
+    --panel:#ffffff;
+    --panel2:#f0f1f5;
+    --text:#202124;
+    --muted:#6b6f76;
+    --border:#e1e2e6;
+    --danger:#d93025;
+    --success:#16803c;
+    --shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    display:flex;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:260px;
+    background:#202124;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    flex-shrink:0;
+}
+
+.brand{
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.brand img{
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    object-fit:contain;
+    background:white;
+    padding:3px;
+}
+
+.brand-text{
+    font-weight:700;
+}
+
+.brand-text small{
+    display:block;
+    opacity:.6;
+    font-weight:400;
+    margin-top:2px;
+}
+
+.nav{
+    padding:12px;
+}
+
+.nav button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#ddd;
+    padding:12px;
+    border-radius:8px;
+    text-align:left;
+    margin-bottom:4px;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:rgba(255,255,255,.1);
+    color:white;
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+    padding:12px;
+    border-top:1px solid rgba(255,255,255,.1);
+}
+
+.user-mini{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:var(--accent);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    flex-shrink:0;
+}
+
+.user-mini-info{
+    min-width:0;
+}
+
+.user-mini-info strong{
+    display:block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.user-mini-info small{
+    color:#aaa;
+}
+
+/* MAIN */
+
+.main{
+    flex:1;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+}
+
+.topbar{
+    height:64px;
+    background:var(--panel);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    gap:15px;
+}
+
+.mobile-menu{
+    display:none;
+    border:0;
+    background:none;
+    font-size:22px;
+}
+
+.search{
+    flex:1;
+    max-width:600px;
+    position:relative;
+}
+
+.search input{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--panel2);
+    border-radius:8px;
+    padding:11px 14px;
+    outline:none;
+}
+
+.search input:focus{
+    border-color:var(--accent);
+}
+
+.top-actions{
+    margin-left:auto;
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:8px;
+    background:transparent;
+}
+
+.icon-btn:hover{
+    background:var(--panel2);
+}
+
+.content{
+    flex:1;
+    overflow:auto;
+    padding:25px;
+}
+
+/* CARDS */
+
+.card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+}
+
+.card-header{
+    padding:18px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.card-body{
+    padding:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:18px;
+}
+
+.stat{
+    padding:20px;
+}
+
+.stat-number{
+    font-size:30px;
+    font-weight:700;
+}
+
+.stat-label{
+    color:var(--muted);
+    margin-top:5px;
+}
+
+/* BUTTONS */
+
+.btn{
+    border:0;
+    border-radius:7px;
+    padding:10px 15px;
+    font-weight:600;
+}
+
+.btn-primary{
+    background:var(--accent);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--accent-dark);
+}
+
+.btn-secondary{
+    background:var(--panel2);
+    color:var(--text);
+}
+
+.btn-danger{
+    background:var(--danger);
+    color:white;
+}
+
+.btn-success{
+    background:var(--success);
+    color:white;
+}
+
+/* LOGIN */
+
+.auth-screen{
+    width:100%;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top left,#dfe2ff,transparent 40%),
+        var(--bg);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.auth-card{
+    width:100%;
+    max-width:460px;
+    background:white;
+    border-radius:18px;
+    box-shadow:0 20px 70px rgba(0,0,0,.15);
+    padding:35px;
+}
+
+.auth-logo{
+    display:block;
+    width:100px;
+    height:100px;
+    object-fit:contain;
+    margin:0 auto 20px;
+}
+
+.auth-title{
+    text-align:center;
+    font-size:27px;
+    font-weight:750;
+}
+
+.auth-subtitle{
+    text-align:center;
+    color:var(--muted);
+    margin:8px 0 25px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:11px;
+    outline:none;
+    background:white;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:var(--accent);
+}
+
+.auth-switch{
+    text-align:center;
+    margin-top:20px;
+    color:var(--muted);
+}
+
+.auth-switch button{
+    background:none;
+    border:0;
+    color:var(--accent);
+    font-weight:700;
+}
+
+/* CHAT */
+
+.chat-layout{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    height:calc(100vh - 114px);
+    gap:15px;
+}
+
+.chat-list{
+    overflow:auto;
+}
+
+.chat-item{
+    padding:13px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    cursor:pointer;
+    border-radius:8px;
+    margin:3px;
+}
+
+.chat-item:hover,
+.chat-item.active{
+    background:var(--panel2);
+}
+
+.chat-main{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.chat-header{
+    padding:15px;
+    border-bottom:1px solid var(--border);
+    background:var(--panel);
+    font-weight:700;
+}
+
+.messages{
+    flex:1;
+    overflow:auto;
+    padding:20px;
+    background:var(--bg);
+}
+
+.message{
+    display:flex;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.message.mine{
+    flex-direction:row-reverse;
+}
+
+.message-bubble{
+    max-width:70%;
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:10px 13px;
+    border-radius:12px;
+}
+
+.mine .message-bubble{
+    background:#e6e7ff;
+}
+
+.message-name{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:4px;
+    font-weight:700;
+}
+
+.message-time{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.chat-input{
+    display:flex;
+    gap:8px;
+    padding:12px;
+    border-top:1px solid var(--border);
+    background:var(--panel);
+}
+
+.chat-input textarea{
+    flex:1;
+    resize:none;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:10px;
+    min-height:42px;
+    max-height:120px;
+}
+
+/* FILES */
+
+.file-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px;
+    border-bottom:1px solid var(--border);
+}
+
+.file-row:last-child{
+    border-bottom:0;
+}
+
+.file-icon{
+    font-size:26px;
+}
+
+.file-info{
+    flex:1;
+    min-width:0;
+}
+
+.file-name{
+    font-weight:650;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.file-meta{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+}
+
+.file-actions{
+    display:flex;
+    gap:6px;
+}
+
+/* GROUPS */
+
+.group-card{
+    padding:20px;
+    cursor:pointer;
+}
+
+.group-card:hover{
+    transform:translateY(-2px);
+}
+
+/* BADGES */
+
+.badge{
+    display:inline-block;
+    border-radius:999px;
+    padding:4px 9px;
+    font-size:11px;
+    font-weight:700;
+}
+
+.badge-pending{
+    background:#fff3cd;
+    color:#795900;
+}
+
+.badge-approved{
+    background:#d9f7e5;
+    color:#146c36;
+}
+
+.badge-admin{
+    background:#e2e4ff;
+    color:#41459a;
+}
+
+.badge-rejected{
+    background:#ffe0df;
+    color:#9c1d18;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+}
+
+/* MODAL */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal{
+    width:100%;
+    max-width:550px;
+    background:var(--panel);
+    border-radius:14px;
+    box-shadow:0 20px 70px rgba(0,0,0,.3);
+    overflow:hidden;
+}
+
+.modal-header{
+    padding:18px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.modal-footer{
+    padding:15px 20px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+/* TOAST */
+
+.toast-container{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    z-index:2000;
+}
+
+.toast{
+    background:#202124;
+    color:white;
+    padding:13px 17px;
+    border-radius:8px;
+    margin-top:8px;
+    box-shadow:var(--shadow);
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .sidebar{
+        position:fixed;
+        z-index:900;
+        left:-270px;
+        top:0;
+        bottom:0;
+        transition:.2s;
+    }
+
+    .sidebar.open{
+        left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .chat-layout{
+        grid-template-columns:1fr;
+    }
+
+    .chat-list{
+        max-height:180px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .topbar{
+        padding:0 12px;
+    }
+
+    .search{
+        max-width:none;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Firebase -->
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    doc,
+    addDoc,
+    setDoc,
+    getDoc,
+    getDocs,
+    updateDoc,
+    deleteDoc,
+    query,
+    where,
+    orderBy,
+    onSnapshot,
+    serverTimestamp,
+    limit
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
+
+
+/* ============================================================
+   FIREBASE CONFIGURATION
+   REPLACE THESE VALUES WITH YOUR FIREBASE PROJECT DETAILS
+   ============================================================ */
+
+const firebaseConfig = {
+
+    apiKey: "YOUR_API_KEY",
+
+    authDomain:
+        "YOUR_PROJECT.firebaseapp.com",
+
+    projectId:
+        "YOUR_PROJECT_ID",
+
+    storageBucket:
+        "YOUR_PROJECT.firebasestorage.app",
+
+    messagingSenderId:
+        "YOUR_MESSAGING_SENDER_ID",
+
+    appId:
+        "YOUR_APP_ID"
+
+};
+
+
+/* ============================================================
+   INITIALISE FIREBASE
+   ============================================================ */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+const storage = getStorage(app);
+
+
+/* ============================================================
+   GLOBAL STATE
+   ============================================================ */
+
+let currentUser = null;
+let currentProfile = null;
+
+let currentView = "dashboard";
+
+let currentChatId = null;
+let currentChatUnsubscribe = null;
+
+let currentFilesUnsubscribe = null;
+
+let currentFolder = "";
+
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+
+function escapeHTML(value){
+
+    if(value === undefined || value === null){
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function initials(name){
+
+    if(!name){
+        return "?";
+    }
+
+    return name
+        .split(" ")
+        .map(x => x[0])
+        .slice(0,2)
+        .join("")
+        .toUpperCase();
+
+}
+
+
+function toast(message){
+
+    const container =
+        document.getElementById("toast-container");
+
+    const el =
+        document.createElement("div");
+
+    el.className = "toast";
+
+    el.textContent = message;
+
+    container.appendChild(el);
+
+    setTimeout(() => {
+
+        el.remove();
+
+    },3500);
+
+}
+
+
+function formatDate(timestamp){
+
+    if(!timestamp){
+        return "";
+    }
+
+    try{
+
+        return timestamp
+            .toDate()
+            .toLocaleString();
+
+    }catch{
+
+        return "";
+
+    }
+
+}
+
+
+function formatBytes(bytes){
+
+    if(bytes === 0){
+        return "0 Bytes";
+    }
+
+    const units =
+        ["Bytes","KB","MB","GB","TB"];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(1)
+    + " "
+    + units[i];
+
+}
+
+
+/* ============================================================
+   ROUTING
+   ============================================================ */
+
+function navigate(view){
+
+    currentView = view;
+
+    location.hash = view;
+
+    renderApp();
+
+}
+
+
+window.addEventListener(
+    "hashchange",
+    () => {
+
+        const hash =
+            location.hash.replace("#","");
+
+        if(hash){
+            currentView = hash;
+        }
+
+        renderApp();
+
+    }
+);
+
+
+/* ============================================================
+   AUTH SCREEN
+   ============================================================ */
+
+function renderAuth(){
+
+    document.getElementById("root").innerHTML = `
+
+    <div class="auth-screen">
+
+        <div class="auth-card">
+
+            <img
+                class="auth-logo"
+                src="http://www.balmuildy.e-dunbarton.sch.uk/media/4775/balmuildy.png"
+            >
+
+            <div class="auth-title">
+                Balmuildy Assembly
+            </div>
+
+            <div class="auth-subtitle">
+                Sign in to your school workspace
+            </div>
+
+            <form id="login-form">
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        id="login-email"
+                        type="email"
+                        required
+                        autocomplete="email"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        id="login-password"
+                        type="password"
+                        required
+                        autocomplete="current-password"
+                    >
+
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    style="width:100%"
+                    type="submit"
+                >
+                    Sign in
+                </button>
+
+            </form>
+
+            <div class="auth-switch">
+
+                Don't have an account?
+
+                <button id="show-signup">
+                    Create account
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    document
+        .getElementById("login-form")
+        .addEventListener(
+            "submit",
+            login
+        );
+
+
+    document
+        .getElementById("show-signup")
+        .addEventListener(
+            "click",
+            renderSignup
+        );
+
+}
+
+
+function renderSignup(){
+
+    document.getElementById("root").innerHTML = `
+
+    <div class="auth-screen">
+
+        <div class="auth-card">
+
+            <img
+                class="auth-logo"
+                src="http://www.balmuildy.e-dunbarton.sch.uk/media/4775/balmuildy.png"
+            >
+
+            <div class="auth-title">
+                Join Balmuildy Assembly
+            </div>
+
+            <div class="auth-subtitle">
+                Your account will need to be approved before you can enter.
+            </div>
+
+            <form id="signup-form">
+
+                <div class="form-group">
+
+                    <label>Display name</label>
+
+                    <input
+                        id="signup-name"
+                        required
+                        maxlength="50"
+                        placeholder="Your name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        id="signup-email"
+                        type="email"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        id="signup-password"
+                        type="password"
+                        minlength="8"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    style="width:100%"
+                    type="submit"
+                >
+                    Request access
+                </button>
+
+            </form>
+
+            <div class="auth-switch">
+
+                Already have an account?
+
+                <button id="show-login">
+                    Sign in
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    document
+        .getElementById("signup-form")
+        .addEventListener(
+            "submit",
+            signup
+        );
+
+
+    document
+        .getElementById("show-login")
+        .addEventListener(
+            "click",
+            renderAuth
+        );
+
+}
+
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+
+async function login(event){
+
+    event.preventDefault();
+
+    const email =
+        document
+        .getElementById("login-email")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("login-password")
+        .value;
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+    }catch(error){
+
+        toast(
+            friendlyAuthError(error)
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   SIGNUP
+   ============================================================ */
+
+async function signup(event){
+
+    event.preventDefault();
+
+    const name =
+        document
+        .getElementById("signup-name")
+        .value
+        .trim();
+
+    const email =
+        document
+        .getElementById("signup-email")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("signup-password")
+        .value;
+
+    try{
+
+        const credential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        const user =
+            credential.user;
+
+
+        await updateProfile(
+            user,
+            {
+                displayName:name
+            }
+        );
+
+
+        await setDoc(
+            doc(
+                db,
+                "users",
+                user.uid
+            ),
+            {
+
+                uid:user.uid,
+
+                email:email,
+
+                displayName:name,
+
+                role:"member",
+
+                status:"pending",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        toast(
+            "Account created. Waiting for approval."
+        );
+
+        await signOut(auth);
+
+        renderAuth();
+
+    }catch(error){
+
+        toast(
+            friendlyAuthError(error)
+        );
+
+    }
+
+}
+
+
+function friendlyAuthError(error){
+
+    const code =
+        error?.code || "";
+
+    const errors = {
+
+        "auth/email-already-in-use":
+            "That email address is already registered.",
+
+        "auth/invalid-email":
+            "Please enter a valid email address.",
+
+        "auth/weak-password":
+            "Your password needs to be stronger.",
+
+        "auth/invalid-credential":
+            "Incorrect email or password.",
+
+        "auth/user-not-found":
+            "Incorrect email or password.",
+
+        "auth/wrong-password":
+            "Incorrect email or password."
+
+    };
+
+    return errors[code] ||
+        error.message ||
+        "Something went wrong.";
+
+}
+
+
+/* ============================================================
+   LOAD PROFILE
+   ============================================================ */
+
+async function loadProfile(){
+
+    if(!currentUser){
+        return null;
+    }
+
+    const snapshot =
+        await getDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            )
+        );
+
+    if(!snapshot.exists()){
+        return null;
+    }
+
+    return {
+        id:snapshot.id,
+        ...snapshot.data()
+    };
+
+}
+
+
+/* ============================================================
+   MAIN APP
+   ============================================================ */
+
+function renderApp(){
+
+    if(!currentUser){
+
+        renderAuth();
+
+        return;
+
+    }
+
+
+    if(!currentProfile){
+
+        document.getElementById("root").innerHTML = `
+
+            <div class="auth-screen">
+                <div class="auth-card">
+                    Loading Balmuildy Assembly...
+                </div>
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if(currentProfile.status !== "approved"){
+
+        renderPending();
+
+        return;
+
+    }
+
+
+    renderShell();
+
+}
+
+
+function renderPending(){
+
+    const rejected =
+        currentProfile.status === "rejected";
+
+    document.getElementById("root").innerHTML = `
+
+    <div class="auth-screen">
+
+        <div class="auth-card">
+
+            <img
+                class="auth-logo"
+                src="http://www.balmuildy.e-dunbarton.sch.uk/media/4775/balmuildy.png"
+            >
+
+            <div class="auth-title">
+
+                ${
+                    rejected
+                    ? "Access declined"
+                    : "Waiting for approval"
+                }
+
+            </div>
+
+            <p style="text-align:center;color:var(--muted)">
+
+                ${
+                    rejected
+
+                    ? "Your account has not been approved."
+
+                    : "Your account has been created successfully. An administrator needs to approve it before you can use Balmuildy Assembly."
+                }
+
+            </p>
+
+            <button
+                class="btn btn-secondary"
+                style="width:100%"
+                onclick="window.logout()"
+            >
+                Sign out
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* ============================================================
+   SHELL
+   ============================================================ */
+
+function renderShell(){
+
+    document.getElementById("root").innerHTML = `
+
+    <div class="app">
+
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
+
+            <div class="brand">
+
+                <img
+                    src="http://www.balmuildy.e-dunbarton.sch.uk/media/4775/balmuildy.png"
+                >
+
+                <div class="brand-text">
+
+                    Balmuildy Assembly
+
+                    <small>
+                        School workspace
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <nav class="nav">
+
+                <button
+                    onclick="window.navigate('dashboard')"
+                    class="${currentView === "dashboard" ? "active":""}"
+                >
+                    Dashboard
+                </button>
+
+                <button
+                    onclick="window.navigate('chat')"
+                    class="${currentView === "chat" ? "active":""}"
+                >
+                    Chat
+                </button>
+
+                <button
+                    onclick="window.navigate('groups')"
+                    class="${currentView === "groups" ? "active":""}"
+                >
+                    Groups
+                </button>
+
+                <button
+                    onclick="window.navigate('files')"
+                    class="${currentView === "files" ? "active":""}"
+                >
+                    Files
+                </button>
+
+                <button
+                    onclick="window.navigate('members')"
+                    class="${currentView === "members" ? "active":""}"
+                >
+                    Members
+                </button>
+
+                ${
+                    currentProfile.role === "admin"
+
+                    ? `
+
+                    <button
+                        onclick="window.navigate('admin')"
+                        class="${currentView === "admin" ? "active":""}"
+                    >
+                        Admin
+                    </button>
+
+                    `
+
+                    : ""
+
+                }
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="user-mini">
+
+                    <div class="avatar">
+
+                        ${initials(currentProfile.displayName)}
+
+                    </div>
+
+                    <div class="user-mini-info">
+
+                        <strong>
+                            ${escapeHTML(currentProfile.displayName)}
+                        </strong>
+
+                        <small>
+                            ${currentProfile.role}
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="btn btn-secondary"
+                    style="width:100%;margin-top:8px"
+                    onclick="window.logout()"
+                >
+                    Sign out
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <button
+                    class="mobile-menu"
+                    onclick="window.toggleSidebar()"
+                >
+                    ☰
+                </button>
+
+                <div class="search">
+
+                    <input
+                        id="global-search"
+                        placeholder="Search Balmuildy Assembly..."
+                        onkeydown="window.globalSearch(event)"
+                    >
+
+                </div>
+
+                <div class="top-actions">
+
+                    <button
+                        class="icon-btn"
+                        title="Profile"
+                        onclick="window.navigate('profile')"
+                    >
+                        ${initials(currentProfile.displayName)}
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <section
+                class="content"
+                id="page-content"
+            ></section>
+
+        </main>
+
+    </div>
+
+    `;
+
+
+    renderCurrentView();
+
+}
+
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+function renderCurrentView(){
+
+    switch(currentView){
+
+        case "chat":
+            renderChat();
+            break;
+
+        case "files":
+            renderFiles();
+            break;
+
+        case "groups":
+            renderGroups();
+            break;
+
+        case "members":
+            renderMembers();
+            break;
+
+        case "admin":
+            renderAdmin();
+            break;
+
+        case "profile":
+            renderProfile();
+            break;
+
+        default:
+            renderDashboard();
+
+    }
+
+}
+
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+async function renderDashboard(){
+
+    const page =
+        document.getElementById("page-content");
+
+    page.innerHTML = `
+
+    <h1>Welcome back, ${escapeHTML(currentProfile.displayName)}</h1>
+
+    <p style="color:var(--muted)">
+        Welcome to Balmuildy Assembly.
+    </p>
+
+    <div class="grid">
+
+        <div class="card stat">
+
+            <div class="stat-number">
+                Chat
+            </div>
+
+            <div class="stat-label">
+                Message other members
+            </div>
+
+            <br>
+
+            <button
+                class="btn btn-primary"
+                onclick="window.navigate('chat')"
+            >
+                Open chat
+            </button>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="stat-number">
+                Files
+            </div>
+
+            <div class="stat-label">
+                Manage your shared files
+            </div>
+
+            <br>
+
+            <button
+                class="btn btn-primary"
+                onclick="window.navigate('files')"
+            >
+                Open files
+            </button>
+
+        </div>
+
+
+        <div class="card stat">
+
+            <div class="stat-number">
+                Groups
+            </div>
+
+            <div class="stat-label">
+                Work together in groups
+            </div>
+
+            <br>
+
+            <button
+                class="btn btn-primary"
+                onclick="window.navigate('groups')"
+            >
+                Open groups
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <strong>
+                Balmuildy Assembly
+            </strong>
+
+        </div>
+
+        <div class="card-body">
+
+            <p>
+                Your account is approved and ready to use.
+            </p>
+
+            <p style="color:var(--muted)">
+                Use the navigation on the left to access chats,
+                groups, files and members.
+            </p>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* ============================================================
+   MEMBERS
+   ============================================================ */
+
+async function renderMembers(){
+
+    const page =
+        document.getElementById("page-content");
+
+    page.innerHTML = `
+
+        <h1>Members</h1>
+
+        <div class="card">
+
+            <div id="members-list">
+                Loading members...
+            </div>
+
+        </div>
+
+    `;
+
+
+    try{
+
+        const snapshot =
+            await getDocs(
+                query(
+                    collection(db,"users"),
+                    where("status","==","approved")
+                )
+            );
+
+
+        if(snapshot.empty){
+
+            document
+                .getElementById("members-list")
+                .innerHTML =
+                `<div class="empty">No members found.</div>`;
+
+            return;
+
+        }
+
+
+        let html = "";
+
+        snapshot.forEach(docSnap => {
+
+            const user =
+                docSnap.data();
+
+            html += `
+
+                <div class="file-row">
+
+                    <div class="avatar">
+                        ${initials(user.displayName)}
+                    </div>
+
+                    <div class="file-info">
+
+                        <div class="file-name">
+                            ${escapeHTML(user.displayName)}
+                        </div>
+
+                        <div class="file-meta">
+                            ${escapeHTML(user.email)}
+                        </div>
+
+                    </div>
+
+                    ${
+                        user.role === "admin"
+                        ? `<span class="badge badge-admin">ADMIN</span>`
+                        : ""
+                    }
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="window.startChat('${docSnap.id}')"
+                    >
+                        Chat
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+
+        document
+            .getElementById("members-list")
+            .innerHTML = html;
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* ============================================================
+   CHAT
+   ============================================================ */
+
+async function renderChat(){
+
+    const page =
+        document.getElementById("page-content");
+
+    page.innerHTML = `
+
+    <div class="chat-layout">
+
+        <div class="card chat-list">
+
+            <div class="card-header">
+                Chats
+            </div>
+
+            <div id="chat-list-content">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <div class="card chat-main">
+
+            <div
+                class="chat-header"
+                id="chat-header"
+            >
+                Select a member to start chatting
+            </div>
+
+            <div
+                class="messages"
+                id="messages"
+            >
+                <div class="empty">
+                    Select a chat.
+                </div>
+            </div>
+
+            <form
+                class="chat-input"
+                id="chat-form"
+            >
+
+                <textarea
+                    id="message-input"
+                    placeholder="Type a message..."
+                    disabled
+                ></textarea>
+
+                <button
+                    class="btn btn-primary"
+                    disabled
+                    id="send-message"
+                >
+                    Send
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    await loadChats();
+
+
+    document
+        .getElementById("chat-form")
+        .addEventListener(
+            "submit",
+            sendMessage
+        );
+
+}
+
+
+async function loadChats(){
+
+    const container =
+        document.getElementById("chat-list-content");
+
+    const snapshot =
+        await getDocs(
+            query(
+                collection(db,"chats"),
+                where(
+                    "participants",
+                    "array-contains",
+                    currentUser.uid
+                ),
+                limit(50)
+            )
+        );
+
+
+    if(snapshot.empty){
+
+        container.innerHTML = `
+            <div class="empty">
+                No chats yet.<br><br>
+                Go to Members and select someone.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+    for(const chatDoc of snapshot.docs){
+
+        const chat =
+            chatDoc.data();
+
+        const otherUid =
+            chat.participants.find(
+                uid => uid !== currentUser.uid
+            );
+
+        if(!otherUid){
+            continue;
+        }
+
+        const other =
+            await getDoc(
+                doc(db,"users",otherUid)
+            );
+
+        if(!other.exists()){
+            continue;
+        }
+
+        const user =
+            other.data();
+
+        html += `
+
+            <div
+                class="chat-item"
+                onclick="window.openChat('${chatDoc.id}','${escapeHTML(user.displayName)}')"
+            >
+
+                <div class="avatar">
+                    ${initials(user.displayName)}
+                </div>
+
+                <div>
+                    <strong>
+                        ${escapeHTML(user.displayName)}
+                    </strong>
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    container.innerHTML =
+        html ||
+        `<div class="empty">No chats yet.</div>`;
+
+}
+
+
+async function startChat(otherUid){
+
+    const existing =
+        await getDocs(
+            query(
+                collection(db,"chats"),
+                where(
+                    "participants",
+                    "array-contains",
+                    currentUser.uid
+                )
+            )
+        );
+
+
+    for(const item of existing.docs){
+
+        const chat =
+            item.data();
+
+        if(
+            chat.participants.length === 2 &&
+            chat.participants.includes(otherUid)
+        ){
+
+            const other =
+                await getDoc(
+                    doc(db,"users",otherUid)
+                );
+
+            const name =
+                other.exists()
+                ? other.data().displayName
+                : "Chat";
+
+            navigate("chat");
+
+            setTimeout(
+                () => openChat(
+                    item.id,
+                    name
+                ),
+                300
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    const chatRef =
+        await addDoc(
+            collection(db,"chats"),
+            {
+
+                participants:[
+                    currentUser.uid,
+                    otherUid
+                ],
+
+                type:"direct",
+
+                createdAt:
+                    serverTimestamp(),
+
+                lastMessage:""
+
+            }
+        );
+
+
+    const other =
+        await getDoc(
+            doc(db,"users",otherUid)
+        );
+
+
+    navigate("chat");
+
+    setTimeout(
+        () => openChat(
+            chatRef.id,
+            other.exists()
+            ? other.data().displayName
+            : "Chat"
+        ),
+        300
+    );
+
+}
+
+
+function openChat(chatId,name){
+
+    currentChatId =
+        chatId;
+
+    document
+        .getElementById("chat-header")
+        .textContent =
+        name;
+
+    document
+        .getElementById("message-input")
+        .disabled = false;
+
+    document
+        .getElementById("send-message")
+        .disabled = false;
+
+
+    if(currentChatUnsubscribe){
+
+        currentChatUnsubscribe();
+
+    }
+
+
+    const messagesQuery =
+        query(
+            collection(
+                db,
+                "chats",
+                chatId,
+                "messages"
+            ),
+            orderBy(
+                "createdAt",
+                "asc"
+            )
+        );
+
+
+    currentChatUnsubscribe =
+        onSnapshot(
+            messagesQuery,
+            snapshot => {
+
+                const container =
+                    document.getElementById(
+                        "messages"
+                    );
+
+                let html = "";
+
+                snapshot.forEach(
+                    messageDoc => {
+
+                        const message =
+                            messageDoc.data();
+
+                        const mine =
+                            message.senderId ===
+                            currentUser.uid;
+
+                        html += `
+
+                            <div
+                                class="message ${mine ? "mine":""}"
+                            >
+
+                                <div class="avatar">
+                                    ${initials(message.senderName)}
+                                </div>
+
+                                <div
+                                    class="message-bubble"
+                                >
+
+                                    <div
+                                        class="message-name"
+                                    >
+                                        ${escapeHTML(message.senderName)}
+                                    </div>
+
+                                    <div>
+                                        ${escapeHTML(message.text)}
+                                    </div>
+
+                                    <div
+                                        class="message-time"
+                                    >
+                                        ${formatDate(message.createdAt)}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+
+                container.innerHTML =
+                    html ||
+                    `<div class="empty">No messages yet.</div>`;
+
+
+                container.scrollTop =
+                    container.scrollHeight;
+
+            },
+            error => {
+
+                toast(
+                    "Unable to load messages: "
+                    + error.message
+                );
+
+            }
+        );
+
+}
+
+
+async function sendMessage(event){
+
+    event.preventDefault();
+
+    if(!currentChatId){
+        return;
+    }
+
+    const input =
+        document.getElementById(
+            "message-input"
+        );
+
+    const text =
+        input.value.trim();
+
+    if(!text){
+        return;
+    }
+
+
+    input.value = "";
+
+
+    try{
+
+        await addDoc(
+            collection(
+                db,
+                "chats",
+                currentChatId,
+                "messages"
+            ),
+            {
+
+                senderId:
+                    currentUser.uid,
+
+                senderName:
+                    currentProfile.displayName,
+
+                text:text,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        await updateDoc(
+            doc(
+                db,
+                "chats",
+                currentChatId
+            ),
+            {
+
+                lastMessage:text,
+
+                lastMessageAt:
+                    serverTimestamp()
+
+            }
+        );
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* ============================================================
+   FILES
+   ============================================================ */
+
+async function renderFiles(){
+
+    const page =
+        document.getElementById("page-content");
+
+    page.innerHTML = `
+
+    <h1>Files</h1>
+
+    <div
+        class="card"
+        style="margin-bottom:15px"
+    >
+
+        <div class="card-body">
+
+            <input
+                type="file"
+                id="file-input"
+            >
+
+            <button
+                class="btn btn-primary"
+                onclick="window.uploadFile()"
+            >
+                Upload file
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <strong>
+                My files
+            </strong>
+
+        </div>
+
+        <div id="files-list">
+            Loading files...
+        </div>
+
+    </div>
+
+    `;
+
+
+    loadFiles();
+
+}
+
+
+function loadFiles(){
+
+    if(currentFilesUnsubscribe){
+
+        currentFilesUnsubscribe();
+
+    }
+
+
+    const filesQuery =
+        query(
+            collection(db,"files"),
+            where(
+                "ownerId",
+                "==",
+                currentUser.uid
+            ),
+            orderBy(
+                "createdAt",
+                "desc"
+            )
+        );
+
+
+    currentFilesUnsubscribe =
+        onSnapshot(
+            filesQuery,
+            snapshot => {
+
+                const container =
+                    document.getElementById(
+                        "files-list"
+                    );
+
+                if(!container){
+                    return;
+                }
+
+
+                if(snapshot.empty){
+
+                    container.innerHTML = `
+                        <div class="empty">
+                            You haven't uploaded any files yet.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                let html = "";
+
+                snapshot.forEach(
+                    fileDoc => {
+
+                        const file =
+                            fileDoc.data();
+
+                        html += `
+
+                            <div class="file-row">
+
+                                <div class="file-icon">
+                                    📄
+                                </div>
+
+                                <div class="file-info">
+
+                                    <div class="file-name">
+                                        ${escapeHTML(file.name)}
+                                    </div>
+
+                                    <div class="file-meta">
+
+                                        ${formatBytes(file.size)}
+                                        ·
+                                        ${formatDate(file.createdAt)}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="file-actions">
+
+                                    <button
+                                        class="btn btn-secondary"
+                                        onclick="window.openFile('${file.url}')"
+                                    >
+                                        Open
+                                    </button>
+
+                                    <button
+                                        class="btn btn-danger"
+                                        onclick="window.deleteFile('${fileDoc.id}','${escapeHTML(file.storagePath)}')"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+
+                container.innerHTML =
+                    html;
+
+            },
+            error => {
+
+                toast(
+                    "Files error: "
+                    + error.message
+                );
+
+            }
+        );
+
+}
+
+
+async function uploadFile(){
+
+    const input =
+        document.getElementById(
+            "file-input"
+        );
+
+    if(!input.files.length){
+
+        toast("Select a file first.");
+
+        return;
+
+    }
+
+
+    const file =
+        input.files[0];
+
+    const fileId =
+        crypto.randomUUID();
+
+    const storagePath =
+        `files/${currentUser.uid}/${fileId}-${file.name}`;
+
+
+    try{
+
+        toast("Uploading...");
+
+
+        const storageRef =
+            ref(
+                storage,
+                storagePath
+            );
+
+
+        await uploadBytes(
+            storageRef,
+            file
+        );
+
+
+        const url =
+            await getDownloadURL(
+                storageRef
+            );
+
+
+        await setDoc(
+            doc(
+                db,
+                "files",
+                fileId
+            ),
+            {
+
+                id:fileId,
+
+                name:file.name,
+
+                size:file.size,
+
+                type:file.type,
+
+                ownerId:
+                    currentUser.uid,
+
+                ownerName:
+                    currentProfile.displayName,
+
+                storagePath:
+
+                    storagePath,
+
+                url:url,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        input.value = "";
+
+        toast("File uploaded.");
+
+    }catch(error){
+
+        toast(
+            "Upload failed: "
+            + error.message
+        );
+
+    }
+
+}
+
+
+async function deleteFile(fileId,storagePath){
+
+    if(
+        !confirm(
+            "Delete this file?"
+        )
+    ){
+        return;
+    }
+
+
+    try{
+
+        await deleteObject(
+            ref(
+                storage,
+                storagePath
+            )
+        );
+
+
+        await deleteDoc(
+            doc(
+                db,
+                "files",
+                fileId
+            )
+        );
+
+
+        toast("File deleted.");
+
+    }catch(error){
+
+        toast(
+            "Delete failed: "
+            + error.message
+        );
+
+    }
+
+}
+
+
+function openFile(url){
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+}
+
+
+/* ============================================================
+   GROUPS
+   ============================================================ */
+
+async function renderGroups(){
+
+    const page =
+        document.getElementById("page-content");
+
+    page.innerHTML = `
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px
+    ">
+
+        <div>
+
+            <h1 style="margin:0">
+                Groups
+            </h1>
+
+            <p style="color:var(--muted)">
+                Collaborate with other members.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="window.createGroup()"
+        >
+            Create group
+        </button>
+
+    </div>
+
+
+    <div
+        class="grid"
+        id="groups-list"
+    >
+        Loading...
+    </div>
+
+    `;
+
+
+    const snapshot =
+        await getDocs(
+            query(
+                collection(db,"groups"),
+                where(
+                    "members",
+                    "array-contains",
+                    currentUser.uid
+                )
+            )
+        );
+
+
+    const container =
+        document.getElementById(
+            "groups-list"
+        );
+
+
+    if(snapshot.empty){
+
+        container.innerHTML = `
+
+            <div class="card">
+                <div class="empty">
+                    You are not in any groups yet.
+                </div>
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+    snapshot.forEach(
+        groupDoc => {
+
+            const group =
+                groupDoc.data();
+
+            html += `
+
+                <div
+                    class="card group-card"
+                    onclick="window.openGroup('${groupDoc.id}')"
+                >
+
+                    <div
+                        style="
+                            font-size:32px;
+                            margin-bottom:10px
+                        "
+                    >
+                        👥
+                    </div>
+
+                    <h3>
+                        ${escapeHTML(group.name)}
+                    </h3>
+
+                    <p style="color:var(--muted)">
+                        ${escapeHTML(group.description || "")}
+                    </p>
+
+                    <small>
+                        ${group.members?.length || 0}
+                        members
+                    </small>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+async function createGroup(){
+
+    const name =
+        prompt("Group name:");
+
+    if(!name){
+        return;
+    }
+
+
+    const description =
+        prompt(
+            "Group description:"
+        ) || "";
+
+
+    try{
+
+        await addDoc(
+            collection(db,"groups"),
+            {
+
+                name:name.trim(),
+
+                description:
+
+                    description.trim(),
+
+                ownerId:
+                    currentUser.uid,
+
+                members:[
+                    currentUser.uid
+                ],
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        toast("Group created.");
+
+        renderGroups();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+function openGroup(id){
+
+    toast(
+        "Group chat can be connected here."
+    );
+
+}
+
+
+/* ============================================================
+   ADMIN
+   ============================================================ */
+
+async function renderAdmin(){
+
+    if(currentProfile.role !== "admin"){
+
+        navigate("dashboard");
+
+        return;
+
+    }
+
+
+    const page =
+        document.getElementById("page-content");
+
+    page.innerHTML = `
+
+        <h1>Administration</h1>
+
+        <p style="color:var(--muted)">
+            Manage Balmuildy Assembly members.
+        </p>
+
+        <div class="card">
+
+            <div class="card-header">
+                Pending accounts
+            </div>
+
+            <div id="pending-users">
+                Loading...
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="card">
+
+            <div class="card-header">
+                Approved members
+            </div>
+
+            <div id="approved-users">
+                Loading...
+            </div>
+
+        </div>
+
+    `;
+
+
+    await loadPendingUsers();
+
+    await loadApprovedUsers();
+
+}
+
+
+async function loadPendingUsers(){
+
+    const snapshot =
+        await getDocs(
+            query(
+                collection(db,"users"),
+                where(
+                    "status",
+                    "==",
+                    "pending"
+                )
+            )
+        );
+
+
+    const container =
+        document.getElementById(
+            "pending-users"
+        );
+
+
+    if(snapshot.empty){
+
+        container.innerHTML = `
+            <div class="empty">
+                No pending accounts.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    snapshot.forEach(
+        userDoc => {
+
+            const user =
+                userDoc.data();
+
+            html += `
+
+                <div class="file-row">
+
+                    <div class="avatar">
+                        ${initials(user.displayName)}
+                    </div>
+
+                    <div class="file-info">
+
+                        <div class="file-name">
+                            ${escapeHTML(user.displayName)}
+                        </div>
+
+                        <div class="file-meta">
+                            ${escapeHTML(user.email)}
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="btn btn-success"
+                        onclick="window.approveUser('${userDoc.id}')"
+                    >
+                        Approve
+                    </button>
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="window.rejectUser('${userDoc.id}')"
+                    >
+                        Reject
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+async function loadApprovedUsers(){
+
+    const snapshot =
+        await getDocs(
+            query(
+                collection(db,"users"),
+                where(
+                    "status",
+                    "==",
+                    "approved"
+                )
+            )
+        );
+
+
+    const container =
+        document.getElementById(
+            "approved-users"
+        );
+
+
+    if(snapshot.empty){
+
+        container.innerHTML = `
+            <div class="empty">
+                No approved members.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    snapshot.forEach(
+        userDoc => {
+
+            const user =
+                userDoc.data();
+
+            html += `
+
+                <div class="file-row">
+
+                    <div class="avatar">
+                        ${initials(user.displayName)}
+                    </div>
+
+                    <div class="file-info">
+
+                        <div class="file-name">
+                            ${escapeHTML(user.displayName)}
+                        </div>
+
+                        <div class="file-meta">
+                            ${escapeHTML(user.email)}
+                        </div>
+
+                    </div>
+
+                    ${
+                        user.role === "admin"
+                        ?
+                        `<span class="badge badge-admin">
+                            ADMIN
+                        </span>`
+                        :
+                        ""
+                    }
+
+                    ${
+                        userDoc.id !== currentUser.uid
+                        ?
+                        `
+
+                        <button
+                            class="btn btn-danger"
+                            onclick="window.removeMember('${userDoc.id}')"
+                        >
+                            Remove
+                        </button>
+
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+async function approveUser(uid){
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "users",
+                uid
+            ),
+            {
+
+                status:"approved",
+
+                approvedBy:
+                    currentUser.uid,
+
+                approvedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        toast("Member approved.");
+
+        renderAdmin();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function rejectUser(uid){
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "users",
+                uid
+            ),
+            {
+
+                status:"rejected",
+
+                rejectedBy:
+                    currentUser.uid,
+
+                rejectedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        toast("Account rejected.");
+
+        renderAdmin();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+async function removeMember(uid){
+
+    if(
+        !confirm(
+            "Remove this member?"
+        )
+    ){
+        return;
+    }
+
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "users",
+                uid
+            ),
+            {
+
+                status:"rejected"
+
+            }
+        );
+
+
+        toast("Member removed.");
+
+        renderAdmin();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* ============================================================
+   PROFILE
+   ============================================================ */
+
+function renderProfile(){
+
+    const page =
+        document.getElementById("page-content");
+
+
+    page.innerHTML = `
+
+        <h1>My Profile</h1>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:15px;
+                        margin-bottom:25px
+                    "
+                >
+
+                    <div
+                        class="avatar"
+                        style="
+                            width:70px;
+                            height:70px;
+                            font-size:24px
+                        "
+                    >
+                        ${initials(currentProfile.displayName)}
+                    </div>
+
+                    <div>
+
+                        <h2 style="margin:0">
+                            ${escapeHTML(currentProfile.displayName)}
+                        </h2>
+
+                        <div style="color:var(--muted)">
+                            ${escapeHTML(currentProfile.email)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Display name
+                    </label>
+
+                    <input
+                        id="profile-name"
+                        value="${escapeHTML(currentProfile.displayName)}"
+                        maxlength="50"
+                    >
+
+                </div>
+
+
+                <button
+                    class="btn btn-primary"
+                    onclick="window.saveProfile()"
+                >
+                    Save changes
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+async function saveProfile(){
+
+    const name =
+        document
+        .getElementById(
+            "profile-name"
+        )
+        .value
+        .trim();
+
+
+    if(!name){
+
+        toast("Enter a display name.");
+
+        return;
+
+    }
+
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            ),
+            {
+
+                displayName:name
+
+            }
+        );
+
+
+        await updateProfile(
+            currentUser,
+            {
+                displayName:name
+            }
+        );
+
+
+        currentProfile.displayName =
+            name;
+
+
+        toast("Profile updated.");
+
+        renderShell();
+
+    }catch(error){
+
+        toast(error.message);
+
+    }
+
+}
+
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+
+function globalSearch(event){
+
+    if(event.key !== "Enter"){
+        return;
+    }
+
+
+    const value =
+        event.target.value.trim();
+
+
+    if(!value){
+        return;
+    }
+
+
+    toast(
+        "Search for: " + value
+    );
+
+}
+
+
+/* ============================================================
+   LOGOUT
+   ============================================================ */
+
+async function logout(){
+
+    if(currentChatUnsubscribe){
+
+        currentChatUnsubscribe();
+
+    }
+
+    if(currentFilesUnsubscribe){
+
+        currentFilesUnsubscribe();
+
+    }
+
+
+    await signOut(auth);
+
+}
+
+
+/* ============================================================
+   GLOBAL FUNCTIONS
+   ============================================================ */
+
+window.navigate =
+    navigate;
+
+window.logout =
+    logout;
+
+window.toggleSidebar =
+    toggleSidebar;
+
+window.startChat =
+    startChat;
+
+window.openChat =
+    openChat;
+
+window.sendMessage =
+    sendMessage;
+
+window.uploadFile =
+    uploadFile;
+
+window.deleteFile =
+    deleteFile;
+
+window.openFile =
+    openFile;
+
+window.createGroup =
+    createGroup;
+
+window.openGroup =
+    openGroup;
+
+window.approveUser =
+    approveUser;
+
+window.rejectUser =
+    rejectUser;
+
+window.removeMember =
+    removeMember;
+
+window.saveProfile =
+    saveProfile;
+
+window.globalSearch =
+    globalSearch;
+
+
+/* ============================================================
+   AUTH STATE
+   ============================================================ */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        currentUser =
+            user;
+
+
+        if(!user){
+
+            currentProfile =
+                null;
+
+            renderAuth();
+
+            return;
+
+        }
+
+
+        try{
+
+            currentProfile =
+                await loadProfile();
+
+
+            if(!currentProfile){
+
+                toast(
+                    "Your account profile could not be found."
+                );
+
+                await signOut(auth);
+
+                return;
+
+            }
+
+
+            const hash =
+                location.hash.replace(
+                    "#",
+                    ""
+                );
+
+
+            if(hash){
+                currentView = hash;
+            }
+
+
+            renderApp();
+
+        }catch(error){
+
+            console.error(error);
+
+            toast(
+                "Unable to load your account."
+            );
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   INITIAL ROUTE
+   ============================================================ */
+
+const initialHash =
+    location.hash.replace(
+        "#",
+        ""
+    );
+
+if(initialHash){
+
+    currentView =
+        initialHash;
+
+}
+
+</script>
+
+</body>
+</html>
