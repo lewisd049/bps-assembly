@@ -1180,7 +1180,24 @@ async function signup(event){
         .getElementById("signup-password")
         .value;
 
+
+    if(!name || !email || !password){
+
+        toast("Please complete all fields.");
+
+        return;
+
+    }
+
+
     try{
+
+        toast("Creating your account...");
+
+
+        /* ==========================================
+           STEP 1 — CREATE FIREBASE AUTH ACCOUNT
+           ========================================== */
 
         const credential =
             await createUserWithEmailAndPassword(
@@ -1189,6 +1206,109 @@ async function signup(event){
                 password
             );
 
+
+        const user =
+            credential.user;
+
+
+        console.log(
+            "AUTH ACCOUNT CREATED:",
+            user.uid
+        );
+
+
+        /* ==========================================
+           STEP 2 — SET AUTH DISPLAY NAME
+           ========================================== */
+
+        await updateProfile(
+            user,
+            {
+                displayName:name
+            }
+        );
+
+
+        console.log(
+            "AUTH PROFILE UPDATED"
+        );
+
+
+        /* ==========================================
+           STEP 3 — CREATE FIRESTORE USER RECORD
+           ========================================== */
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                user.uid
+            );
+
+
+        await setDoc(
+            userRef,
+            {
+
+                uid:user.uid,
+
+                email:email,
+
+                displayName:name,
+
+                role:"member",
+
+                status:"pending",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        console.log(
+            "FIRESTORE USER RECORD CREATED"
+        );
+
+
+        /* ==========================================
+           SUCCESS
+           ========================================== */
+
+        toast(
+            "Account created! Waiting for approval."
+        );
+
+
+        await signOut(auth);
+
+
+        renderAuth();
+
+
+    }catch(error){
+
+        console.error(
+            "SIGNUP ERROR:",
+            error
+        );
+
+
+        /*
+         * IMPORTANT:
+         * Show the actual Firebase error.
+         */
+
+        toast(
+            error.code
+            ? error.code + ": " + error.message
+            : error.message
+        );
+
+    }
+
+}
         const user =
             credential.user;
 
