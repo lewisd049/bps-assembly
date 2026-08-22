@@ -36,10 +36,14 @@ body{
     margin:0;
     padding:0;
     width:100%;
-    height:100%;
+    min-height:100%;
     font-family:Inter,Segoe UI,Arial,sans-serif;
     background:var(--bg);
     color:var(--text);
+}
+
+body{
+    min-height:100vh;
 }
 
 button,
@@ -53,14 +57,17 @@ button{
     cursor:pointer;
 }
 
+button:disabled{
+    cursor:not-allowed;
+    opacity:.6;
+}
+
 .app{
     display:flex;
     width:100%;
-    height:100vh;
+    min-height:100vh;
     overflow:hidden;
 }
-
-/* SIDEBAR */
 
 .sidebar{
     width:260px;
@@ -161,17 +168,17 @@ button{
     color:#aaa;
 }
 
-/* MAIN */
-
 .main{
     flex:1;
     min-width:0;
+    min-height:100vh;
     display:flex;
     flex-direction:column;
 }
 
 .topbar{
     height:64px;
+    min-height:64px;
     background:var(--panel);
     border-bottom:1px solid var(--border);
     display:flex;
@@ -217,6 +224,7 @@ button{
     border:0;
     border-radius:8px;
     background:transparent;
+    font-weight:700;
 }
 
 .icon-btn:hover{
@@ -228,8 +236,6 @@ button{
     overflow:auto;
     padding:25px;
 }
-
-/* CARDS */
 
 .card{
     background:var(--panel);
@@ -244,6 +250,7 @@ button{
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:10px;
 }
 
 .card-body{
@@ -269,8 +276,6 @@ button{
     color:var(--muted);
     margin-top:5px;
 }
-
-/* BUTTONS */
 
 .btn{
     border:0;
@@ -302,8 +307,6 @@ button{
     background:var(--success);
     color:white;
 }
-
-/* LOGIN */
 
 .auth-screen{
     width:100%;
@@ -386,12 +389,11 @@ button{
     font-weight:700;
 }
 
-/* CHAT */
-
 .chat-layout{
     display:grid;
     grid-template-columns:280px 1fr;
     height:calc(100vh - 114px);
+    min-height:500px;
     gap:15px;
 }
 
@@ -450,6 +452,7 @@ button{
     border:1px solid var(--border);
     padding:10px 13px;
     border-radius:12px;
+    overflow-wrap:anywhere;
 }
 
 .mine .message-bubble{
@@ -486,8 +489,6 @@ button{
     min-height:42px;
     max-height:120px;
 }
-
-/* FILES */
 
 .file-row{
     display:flex;
@@ -526,9 +527,8 @@ button{
 .file-actions{
     display:flex;
     gap:6px;
+    flex-wrap:wrap;
 }
-
-/* GROUPS */
 
 .group-card{
     padding:20px;
@@ -539,8 +539,6 @@ button{
 .group-card:hover{
     transform:translateY(-2px);
 }
-
-/* BADGES */
 
 .badge{
     display:inline-block;
@@ -570,15 +568,11 @@ button{
     color:#9c1d18;
 }
 
-/* EMPTY */
-
 .empty{
     text-align:center;
     padding:60px 20px;
     color:var(--muted);
 }
-
-/* TOAST */
 
 .toast-container{
     position:fixed;
@@ -597,8 +591,6 @@ button{
     max-width:400px;
 }
 
-/* MOBILE */
-
 @media(max-width:800px){
 
     .sidebar{
@@ -608,6 +600,7 @@ button{
         top:0;
         bottom:0;
         transition:.2s;
+        height:100vh;
     }
 
     .sidebar.open{
@@ -620,10 +613,16 @@ button{
 
     .chat-layout{
         grid-template-columns:1fr;
+        height:auto;
+        min-height:0;
     }
 
     .chat-list{
         max-height:180px;
+    }
+
+    .chat-main{
+        min-height:500px;
     }
 
     .content{
@@ -638,10 +637,18 @@ button{
         max-width:none;
     }
 
+    .file-row{
+        align-items:flex-start;
+        flex-wrap:wrap;
+    }
+
+    .file-info{
+        min-width:calc(100% - 60px);
+    }
+
 }
 
 </style>
-
 </head>
 
 <body>
@@ -650,17 +657,11 @@ button{
 
 <div id="toast-container" class="toast-container"></div>
 
-
 <script type="module">
-
-/* ============================================================
-   FIREBASE
-   ============================================================ */
 
 import {
     initializeApp
-}
-from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
 import {
     getAuth,
@@ -669,8 +670,7 @@ import {
     signOut,
     onAuthStateChanged,
     updateProfile
-}
-from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 import {
     getFirestore,
@@ -681,44 +681,39 @@ import {
     getDoc,
     getDocs,
     updateDoc,
-    deleteDoc,
     query,
     where,
     orderBy,
     onSnapshot,
     serverTimestamp,
     limit
-}
-from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
 /* ============================================================
    FIREBASE CONFIG
    ============================================================ */
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyClL16WbunPflZ6zZeHfif2K3XVBUlijBk",
-  authDomain: "balmuildyprimaryschool.firebaseapp.com",
-  projectId: "balmuildyprimaryschool",
-  storageBucket: "balmuildyprimaryschool.firebasestorage.app",
-  messagingSenderId: "767459231241",
-  appId: "1:767459231241:web:1fde490389331f85f35ad8",
-  measurementId: "G-DCTYENE246"
+    apiKey: "AIzaSyClL16WbunPflZ6zZeHfif2K3XVBUlijBk",
+    authDomain: "balmuildyprimaryschool.firebaseapp.com",
+    projectId: "balmuildyprimaryschool",
+    storageBucket: "balmuildyprimaryschool.firebasestorage.app",
+    messagingSenderId: "767459231241",
+    appId: "1:767459231241:web:1fde490389331f85f35ad8",
+    measurementId: "G-DCTYENE246"
 };
 
+
 /* ============================================================
-   INITIALISE
+   INITIALISE FIREBASE
    ============================================================ */
 
-const app =
-    initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const auth =
-    getAuth(app);
+const auth = getAuth(app);
 
-const db =
-    getFirestore(app);
+const db = getFirestore(app);
 
 
 /* ============================================================
@@ -730,14 +725,19 @@ let currentUser = null;
 let currentProfile = null;
 
 let currentView =
-    location.hash.replace("#","")
-    || "dashboard";
+    location.hash.replace("#","") || "dashboard";
 
 let currentChatId = null;
 
 let currentChatUnsubscribe = null;
 
-let currentFilesUnsubscribe = null;
+
+/* ============================================================
+   FILE API
+   ============================================================ */
+
+const FILE_API =
+    "https://api.assets.balmuildyprimaryschool.tdf1.uk";
 
 
 /* ============================================================
@@ -746,10 +746,7 @@ let currentFilesUnsubscribe = null;
 
 function escapeHTML(value){
 
-    if(
-        value === undefined ||
-        value === null
-    ){
+    if(value === undefined || value === null){
         return "";
     }
 
@@ -759,7 +756,6 @@ function escapeHTML(value){
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
-
 }
 
 
@@ -776,16 +772,13 @@ function initials(name){
         .slice(0,2)
         .join("")
         .toUpperCase();
-
 }
 
 
 function toast(message){
 
     const container =
-        document.getElementById(
-            "toast-container"
-        );
+        document.getElementById("toast-container");
 
     if(!container){
         return;
@@ -794,11 +787,9 @@ function toast(message){
     const item =
         document.createElement("div");
 
-    item.className =
-        "toast";
+    item.className = "toast";
 
-    item.textContent =
-        message;
+    item.textContent = message;
 
     container.appendChild(item);
 
@@ -806,7 +797,6 @@ function toast(message){
         () => item.remove(),
         4500
     );
-
 }
 
 
@@ -818,16 +808,53 @@ function formatDate(timestamp){
 
     try{
 
-        return timestamp
-            .toDate()
-            .toLocaleString();
+        if(
+            typeof timestamp.toDate === "function"
+        ){
+
+            return timestamp
+                .toDate()
+                .toLocaleString();
+
+        }
+
+        if(
+            timestamp instanceof Date
+        ){
+
+            return timestamp.toLocaleString();
+
+        }
+
+        const date =
+            new Date(timestamp);
+
+        if(
+            Number.isNaN(
+                date.getTime()
+            )
+        ){
+
+            return "";
+
+        }
+
+        return date.toLocaleString();
 
     }catch{
 
         return "";
 
     }
+}
 
+
+function safeJson(value){
+
+    return JSON.stringify(value)
+        .replace(/</g,"\\u003c")
+        .replace(/>/g,"\\u003e")
+        .replace(/&/g,"\\u0026");
 }
 
 
@@ -837,14 +864,11 @@ function formatDate(timestamp){
 
 function navigate(view){
 
-    currentView =
-        view;
+    currentView = view;
 
-    location.hash =
-        view;
+    location.hash = view;
 
     renderApp();
-
 }
 
 
@@ -853,10 +877,8 @@ window.addEventListener(
     () => {
 
         currentView =
-            location.hash.replace(
-                "#",
-                ""
-            ) || "dashboard";
+            location.hash.replace("#","")
+            || "dashboard";
 
         renderApp();
 
@@ -870,9 +892,7 @@ window.addEventListener(
 
 function renderAuth(){
 
-    document.getElementById(
-        "root"
-    ).innerHTML = `
+    document.getElementById("root").innerHTML = `
 
         <div class="auth-screen">
 
@@ -896,7 +916,9 @@ function renderAuth(){
 
                     <div class="form-group">
 
-                        <label>Email</label>
+                        <label for="login-email">
+                            Email
+                        </label>
 
                         <input
                             id="login-email"
@@ -909,7 +931,9 @@ function renderAuth(){
 
                     <div class="form-group">
 
-                        <label>Password</label>
+                        <label for="login-password">
+                            Password
+                        </label>
 
                         <input
                             id="login-password"
@@ -934,7 +958,10 @@ function renderAuth(){
 
                     Don't have an account?
 
-                    <button id="show-signup">
+                    <button
+                        id="show-signup"
+                        type="button"
+                    >
                         Create account
                     </button>
 
@@ -961,15 +988,16 @@ function renderAuth(){
             "click",
             renderSignup
         );
-
 }
 
 
+/* ============================================================
+   SIGNUP
+   ============================================================ */
+
 function renderSignup(){
 
-    document.getElementById(
-        "root"
-    ).innerHTML = `
+    document.getElementById("root").innerHTML = `
 
         <div class="auth-screen">
 
@@ -993,7 +1021,9 @@ function renderSignup(){
 
                     <div class="form-group">
 
-                        <label>Display name</label>
+                        <label for="signup-name">
+                            Display name
+                        </label>
 
                         <input
                             id="signup-name"
@@ -1006,7 +1036,9 @@ function renderSignup(){
 
                     <div class="form-group">
 
-                        <label>Email</label>
+                        <label for="signup-email">
+                            Email
+                        </label>
 
                         <input
                             id="signup-email"
@@ -1019,7 +1051,9 @@ function renderSignup(){
 
                     <div class="form-group">
 
-                        <label>Password</label>
+                        <label for="signup-password">
+                            Password
+                        </label>
 
                         <input
                             id="signup-password"
@@ -1045,7 +1079,10 @@ function renderSignup(){
 
                     Already have an account?
 
-                    <button id="show-login">
+                    <button
+                        id="show-login"
+                        type="button"
+                    >
                         Sign in
                     </button>
 
@@ -1072,12 +1109,11 @@ function renderSignup(){
             "click",
             renderAuth
         );
-
 }
 
 
 /* ============================================================
-   LOGIN FUNCTION
+   LOGIN
    ============================================================ */
 
 async function login(event){
@@ -1086,14 +1122,14 @@ async function login(event){
 
     const email =
         document
-        .getElementById("login-email")
-        .value
-        .trim();
+            .getElementById("login-email")
+            .value
+            .trim();
 
     const password =
         document
-        .getElementById("login-password")
-        .value;
+            .getElementById("login-password")
+            .value;
 
     try{
 
@@ -1106,65 +1142,56 @@ async function login(event){
     }catch(error){
 
         console.error(
-            "LOGIN ERROR",
+            "LOGIN ERROR:",
             error
         );
 
         toast(
             friendlyAuthError(error)
         );
-
     }
-
 }
 
 
 /* ============================================================
-   SIGNUP FUNCTION
+   SIGNUP
    ============================================================ */
 
 async function signup(event){
 
     event.preventDefault();
 
-
     const name =
         document
-        .getElementById("signup-name")
-        .value
-        .trim();
+            .getElementById("signup-name")
+            .value
+            .trim();
 
     const email =
         document
-        .getElementById("signup-email")
-        .value
-        .trim();
+            .getElementById("signup-email")
+            .value
+            .trim();
 
     const password =
         document
-        .getElementById("signup-password")
-        .value;
+            .getElementById("signup-password")
+            .value;
 
 
     if(!name){
 
-        toast(
-            "Please enter a display name."
-        );
+        toast("Please enter a display name.");
 
         return;
-
     }
 
 
     if(!email){
 
-        toast(
-            "Please enter an email address."
-        );
+        toast("Please enter an email address.");
 
         return;
-
     }
 
 
@@ -1175,18 +1202,13 @@ async function signup(event){
         );
 
         return;
-
     }
 
 
     try{
 
-        toast(
-            "Creating account..."
-        );
+        toast("Creating account...");
 
-
-        /* CREATE AUTH USER */
 
         const credential =
             await createUserWithEmailAndPassword(
@@ -1200,14 +1222,6 @@ async function signup(event){
             credential.user;
 
 
-        console.log(
-            "Firebase Auth account created:",
-            user.uid
-        );
-
-
-        /* SET AUTH DISPLAY NAME */
-
         await updateProfile(
             user,
             {
@@ -1215,13 +1229,6 @@ async function signup(event){
             }
         );
 
-
-        console.log(
-            "Firebase Auth profile updated."
-        );
-
-
-        /* CREATE FIRESTORE USER DOCUMENT */
 
         await setDoc(
             doc(
@@ -1231,30 +1238,19 @@ async function signup(event){
             ),
             {
 
-                uid:
-                    user.uid,
+                uid:user.uid,
 
-                email:
-                    email,
+                email:email,
 
-                displayName:
-                    name,
+                displayName:name,
 
-                role:
-                    "member",
+                role:"member",
 
-                status:
-                    "pending",
+                status:"pending",
 
-                createdAt:
-                    serverTimestamp()
+                createdAt:serverTimestamp()
 
             }
-        );
-
-
-        console.log(
-            "Firestore user document created."
         );
 
 
@@ -1263,9 +1259,7 @@ async function signup(event){
         );
 
 
-        await signOut(
-            auth
-        );
+        await signOut(auth);
 
 
         renderAuth();
@@ -1278,95 +1272,51 @@ async function signup(event){
             error
         );
 
-
         toast(
             friendlyAuthError(error)
         );
-
     }
-
 }
 
 
 /* ============================================================
-   ERROR MESSAGES
+   FIREBASE ERROR MESSAGES
    ============================================================ */
 
 function friendlyAuthError(error){
 
-    if(
-        error?.code ===
-        "auth/email-already-in-use"
-    ){
-
-        return "That email address is already registered.";
-
-    }
+    const code =
+        error?.code || "";
 
 
-    if(
-        error?.code ===
-        "auth/invalid-email"
-    ){
+    switch(code){
 
-        return "Please enter a valid email address.";
+        case "auth/email-already-in-use":
+            return "That email address is already registered.";
 
-    }
+        case "auth/invalid-email":
+            return "Please enter a valid email address.";
 
+        case "auth/weak-password":
+            return "The password is too weak.";
 
-    if(
-        error?.code ===
-        "auth/weak-password"
-    ){
+        case "auth/invalid-credential":
+            return "Incorrect email or password.";
 
-        return "The password is too weak.";
+        case "auth/user-not-found":
+            return "Incorrect email or password.";
 
-    }
+        case "auth/wrong-password":
+            return "Incorrect email or password.";
 
+        case "permission-denied":
+            return "Firestore permission denied. Check your Firestore rules.";
 
-    if(
-        error?.code ===
-        "auth/invalid-credential"
-    ){
-
-        return "Incorrect email or password.";
+        default:
+            return error?.message ||
+                "Something went wrong.";
 
     }
-
-
-    if(
-        error?.code ===
-        "auth/user-not-found"
-    ){
-
-        return "Incorrect email or password.";
-
-    }
-
-
-    if(
-        error?.code ===
-        "auth/wrong-password"
-    ){
-
-        return "Incorrect email or password.";
-
-    }
-
-
-    if(
-        error?.code ===
-        "permission-denied"
-    ){
-
-        return "Firestore permission denied. Check your Firestore rules.";
-
-    }
-
-
-    return error?.message ||
-        "Something went wrong.";
-
 }
 
 
@@ -1401,14 +1351,9 @@ async function loadProfile(){
 
 
     return {
-
-        id:
-            snapshot.id,
-
+        id:snapshot.id,
         ...snapshot.data()
-
     };
-
 }
 
 
@@ -1429,9 +1374,7 @@ function renderApp(){
 
     if(!currentProfile){
 
-        document.getElementById(
-            "root"
-        ).innerHTML = `
+        document.getElementById("root").innerHTML = `
 
             <div class="auth-screen">
 
@@ -1457,8 +1400,7 @@ function renderApp(){
 
 
     if(
-        currentProfile.status !==
-        "approved"
+        currentProfile.status !== "approved"
     ){
 
         renderPending();
@@ -1469,24 +1411,20 @@ function renderApp(){
 
 
     renderShell();
-
 }
 
 
 /* ============================================================
-   PENDING SCREEN
+   PENDING / REJECTED
    ============================================================ */
 
 function renderPending(){
 
     const rejected =
-        currentProfile.status ===
-        "rejected";
+        currentProfile.status === "rejected";
 
 
-    document.getElementById(
-        "root"
-    ).innerHTML = `
+    document.getElementById("root").innerHTML = `
 
         <div class="auth-screen">
 
@@ -1538,7 +1476,6 @@ function renderPending(){
         </div>
 
     `;
-
 }
 
 
@@ -1548,9 +1485,7 @@ function renderPending(){
 
 function renderShell(){
 
-    document.getElementById(
-        "root"
-    ).innerHTML = `
+    document.getElementById("root").innerHTML = `
 
         <div class="app">
 
@@ -1618,20 +1553,15 @@ function renderShell(){
 
                     ${
                         currentProfile.role === "admin"
-
                         ? `
-
                             <button
                                 class="${currentView === "admin" ? "active" : ""}"
                                 onclick="window.navigate('admin')"
                             >
                                 Admin
                             </button>
-
                         `
-
                         : ""
-
                     }
 
                 </nav>
@@ -1652,7 +1582,7 @@ function renderShell(){
                             </strong>
 
                             <small>
-                                ${escapeHTML(currentProfile.role)}
+                                ${escapeHTML(currentProfile.role || "member")}
                             </small>
 
                         </div>
@@ -1680,6 +1610,7 @@ function renderShell(){
                     <button
                         class="mobile-menu"
                         onclick="window.toggleSidebar()"
+                        aria-label="Open menu"
                     >
                         ☰
                     </button>
@@ -1723,7 +1654,6 @@ function renderShell(){
 
 
     renderCurrentView();
-
 }
 
 
@@ -1761,9 +1691,9 @@ function renderCurrentView(){
 
         default:
             renderDashboard();
+            break;
 
     }
-
 }
 
 
@@ -1774,9 +1704,7 @@ function renderCurrentView(){
 function renderDashboard(){
 
     const page =
-        document.getElementById(
-            "page-content"
-        );
+        document.getElementById("page-content");
 
 
     page.innerHTML = `
@@ -1822,7 +1750,7 @@ function renderDashboard(){
                 </div>
 
                 <div class="stat-label">
-                    Manage shared file links
+                    Manage shared files
                 </div>
 
                 <br>
@@ -1888,7 +1816,6 @@ function renderDashboard(){
         </div>
 
     `;
-
 }
 
 
@@ -1899,9 +1826,7 @@ function renderDashboard(){
 async function renderMembers(){
 
     const page =
-        document.getElementById(
-            "page-content"
-        );
+        document.getElementById("page-content");
 
 
     page.innerHTML = `
@@ -1912,9 +1837,7 @@ async function renderMembers(){
 
         <div class="card">
 
-            <div
-                id="members-list"
-            >
+            <div id="members-list">
                 Loading members...
             </div>
 
@@ -1939,9 +1862,7 @@ async function renderMembers(){
 
 
         const container =
-            document.getElementById(
-                "members-list"
-            );
+            document.getElementById("members-list");
 
 
         if(snapshot.empty){
@@ -1953,7 +1874,6 @@ async function renderMembers(){
             `;
 
             return;
-
         }
 
 
@@ -1987,47 +1907,37 @@ async function renderMembers(){
 
                         </div>
 
-
                         ${
                             user.role === "admin"
-
                             ? `
                                 <span class="badge badge-admin">
                                     ADMIN
                                 </span>
                               `
-
                             : ""
-
                         }
-
 
                         ${
                             userDoc.id !== currentUser.uid
-
                             ? `
                                 <button
                                     class="btn btn-secondary"
-                                    onclick="window.startChat('${userDoc.id}')"
+                                    onclick="window.startChat(${safeJson(userDoc.id)})"
                                 >
                                     Chat
                                 </button>
                               `
-
                             : ""
-
                         }
 
                     </div>
 
                 `;
-
             }
         );
 
 
-        container.innerHTML =
-            html;
+        container.innerHTML = html;
 
 
     }catch(error){
@@ -2038,9 +1948,7 @@ async function renderMembers(){
         );
 
 
-        document.getElementById(
-            "members-list"
-        ).innerHTML = `
+        document.getElementById("members-list").innerHTML = `
 
             <div class="empty">
 
@@ -2055,9 +1963,7 @@ async function renderMembers(){
             </div>
 
         `;
-
     }
-
 }
 
 
@@ -2068,9 +1974,7 @@ async function renderMembers(){
 async function renderChat(){
 
     const page =
-        document.getElementById(
-            "page-content"
-        );
+        document.getElementById("page-content");
 
 
     page.innerHTML = `
@@ -2146,9 +2050,12 @@ async function renderChat(){
 
 
     await loadChats();
-
 }
 
+
+/* ============================================================
+   LOAD CHATS
+   ============================================================ */
 
 async function loadChats(){
 
@@ -2191,7 +2098,6 @@ async function loadChats(){
             `;
 
             return;
-
         }
 
 
@@ -2199,8 +2105,7 @@ async function loadChats(){
 
 
         for(
-            const chatDoc
-            of snapshot.docs
+            const chatDoc of snapshot.docs
         ){
 
             const chat =
@@ -2208,10 +2113,12 @@ async function loadChats(){
 
 
             const otherUid =
-                chat.participants.find(
+                Array.isArray(chat.participants)
+                ? chat.participants.find(
                     uid =>
                         uid !== currentUser.uid
-                );
+                )
+                : null;
 
 
             if(!otherUid){
@@ -2243,8 +2150,8 @@ async function loadChats(){
                 <div
                     class="chat-item"
                     onclick="window.openChat(
-                        '${chatDoc.id}',
-                        '${escapeHTML(user.displayName)}'
+                        ${safeJson(chatDoc.id)},
+                        ${safeJson(user.displayName || "Chat")}
                     )"
                 >
 
@@ -2263,7 +2170,6 @@ async function loadChats(){
                 </div>
 
             `;
-
         }
 
 
@@ -2295,9 +2201,7 @@ async function loadChats(){
             </div>
 
         `;
-
     }
-
 }
 
 
@@ -2323,8 +2227,7 @@ async function startChat(otherUid){
 
 
         for(
-            const item
-            of snapshot.docs
+            const item of snapshot.docs
         ){
 
             const chat =
@@ -2332,6 +2235,7 @@ async function startChat(otherUid){
 
 
             if(
+                Array.isArray(chat.participants) &&
                 chat.participants.length === 2 &&
                 chat.participants.includes(otherUid)
             ){
@@ -2361,14 +2265,12 @@ async function startChat(otherUid){
                             item.id,
                             name
                         ),
-                    300
+                    250
                 );
 
 
                 return;
-
             }
-
         }
 
 
@@ -2382,14 +2284,12 @@ async function startChat(otherUid){
                         otherUid
                     ],
 
-                    type:
-                        "direct",
+                    type:"direct",
 
                     createdAt:
                         serverTimestamp(),
 
-                    lastMessage:
-                        ""
+                    lastMessage:""
 
                 }
             );
@@ -2416,19 +2316,22 @@ async function startChat(otherUid){
                     ? other.data().displayName
                     : "Chat"
                 ),
-            300
+            250
         );
 
 
     }catch(error){
 
+        console.error(
+            "START CHAT ERROR:",
+            error
+        );
+
         toast(
             "Unable to start chat: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -2438,34 +2341,24 @@ async function startChat(otherUid){
 
 function openChat(chatId,name){
 
-    currentChatId =
-        chatId;
+    currentChatId = chatId;
 
 
     const header =
-        document.getElementById(
-            "chat-header"
-        );
+        document.getElementById("chat-header");
 
 
     if(header){
-
-        header.textContent =
-            name;
-
+        header.textContent = name || "Chat";
     }
 
 
     const input =
-        document.getElementById(
-            "message-input"
-        );
+        document.getElementById("message-input");
 
 
     const button =
-        document.getElementById(
-            "send-message"
-        );
+        document.getElementById("send-message");
 
 
     if(input){
@@ -2482,6 +2375,7 @@ function openChat(chatId,name){
 
         currentChatUnsubscribe();
 
+        currentChatUnsubscribe = null;
     }
 
 
@@ -2507,9 +2401,7 @@ function openChat(chatId,name){
             snapshot => {
 
                 const container =
-                    document.getElementById(
-                        "messages"
-                    );
+                    document.getElementById("messages");
 
 
                 if(!container){
@@ -2561,7 +2453,6 @@ function openChat(chatId,name){
                             </div>
 
                         `;
-
                     }
                 );
 
@@ -2585,12 +2476,12 @@ function openChat(chatId,name){
 
 
                 toast(
-                    "Unable to load messages."
+                    "Unable to load messages: " +
+                    error.message
                 );
 
             }
         );
-
 }
 
 
@@ -2623,8 +2514,7 @@ async function sendMessage(event){
     }
 
 
-    input.value =
-        "";
+    input.value = "";
 
 
     try{
@@ -2644,8 +2534,7 @@ async function sendMessage(event){
                 senderName:
                     currentProfile.displayName,
 
-                text:
-                    text,
+                text:text,
 
                 createdAt:
                     serverTimestamp()
@@ -2684,32 +2573,7 @@ async function sendMessage(event){
             "Unable to send message: " +
             error.message
         );
-
     }
-
-}
-
-
-/* ============================================================
-   FILES
-   ============================================================ */
-
-const FILE_API =
-    "https://api.assets.balmuildyprimaryschool.tdf1.uk";
-
-
-async function getFileAuthToken(){
-
-    if(!currentUser){
-
-        throw new Error(
-            "You must be signed in to upload files."
-        );
-
-    }
-
-    return await currentUser.getIdToken();
-
 }
 
 
@@ -2750,7 +2614,7 @@ async function renderFiles(){
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="file-upload">
                         Select file
                     </label>
 
@@ -2810,8 +2674,26 @@ async function renderFiles(){
     `;
 
 
-    loadFiles();
+    await loadFiles();
+}
 
+
+/* ============================================================
+   FILE AUTH TOKEN
+   ============================================================ */
+
+async function getFileAuthToken(){
+
+    if(!currentUser){
+
+        throw new Error(
+            "You must be signed in to use files."
+        );
+
+    }
+
+
+    return await currentUser.getIdToken();
 }
 
 
@@ -2822,9 +2704,7 @@ async function renderFiles(){
 async function loadFiles(){
 
     const container =
-        document.getElementById(
-            "files-list"
-        );
+        document.getElementById("files-list");
 
 
     if(!container){
@@ -2833,11 +2713,9 @@ async function loadFiles(){
 
 
     container.innerHTML = `
-
         <div class="empty">
             Loading files...
         </div>
-
     `;
 
 
@@ -2851,15 +2729,11 @@ async function loadFiles(){
             await fetch(
                 FILE_API + "/files",
                 {
-
-                    method:
-                        "GET",
-
+                    method:"GET",
                     headers:{
                         "Authorization":
                             "Bearer " + token
                     }
-
                 }
             );
 
@@ -2875,18 +2749,14 @@ async function loadFiles(){
                     await response.json();
 
                 if(data?.error){
-                    message =
-                        data.error;
+                    message = data.error;
                 }
 
             }catch{
 
             }
 
-            throw new Error(
-                message
-            );
-
+            throw new Error(message);
         }
 
 
@@ -2900,17 +2770,12 @@ async function loadFiles(){
         ){
 
             container.innerHTML = `
-
                 <div class="empty">
-
                     No files yet.
-
                 </div>
-
             `;
 
             return;
-
         }
 
 
@@ -2924,17 +2789,6 @@ async function loadFiles(){
                     file.name ||
                     file.filename ||
                     "Unnamed file";
-
-
-                const fileUrl =
-                    file.url ||
-                    (
-                        FILE_API +
-                        "/files/" +
-                        encodeURIComponent(
-                            fileName
-                        )
-                    );
 
 
                 const ownerName =
@@ -2955,7 +2809,7 @@ async function loadFiles(){
                     <div class="file-row">
 
                         <div class="file-icon">
-                            📄
+                            FILE
                         </div>
 
                         <div class="file-info">
@@ -2985,9 +2839,7 @@ async function loadFiles(){
 
                             <button
                                 class="btn btn-secondary"
-                                onclick="window.openFile(
-                                    '${encodeURIComponent(fileName)}'
-                                )"
+                                onclick="window.openFile(${safeJson(fileName)})"
                             >
                                 Open
                             </button>
@@ -2995,9 +2847,7 @@ async function loadFiles(){
 
                             <button
                                 class="btn btn-danger"
-                                onclick="window.deleteFile(
-                                    '${encodeURIComponent(fileName)}'
-                                )"
+                                onclick="window.deleteFile(${safeJson(fileName)})"
                             >
                                 Delete
                             </button>
@@ -3007,13 +2857,11 @@ async function loadFiles(){
                     </div>
 
                 `;
-
             }
         );
 
 
-        container.innerHTML =
-            html;
+        container.innerHTML = html;
 
 
     }catch(error){
@@ -3039,9 +2887,7 @@ async function loadFiles(){
             </div>
 
         `;
-
     }
-
 }
 
 
@@ -3070,20 +2916,20 @@ async function uploadFile(){
 
 
     if(!input){
-
         return;
-
     }
 
 
-    if(!input.files || !input.files.length){
+    if(
+        !input.files ||
+        !input.files.length
+    ){
 
         toast(
             "Please select a file."
         );
 
         return;
-
     }
 
 
@@ -3093,8 +2939,7 @@ async function uploadFile(){
 
     try{
 
-        button.disabled =
-            true;
+        button.disabled = true;
 
 
         progress.textContent =
@@ -3139,18 +2984,14 @@ async function uploadFile(){
             await fetch(
                 FILE_API + "/upload",
                 {
-
-                    method:
-                        "POST",
+                    method:"POST",
 
                     headers:{
                         "Authorization":
                             "Bearer " + token
                     },
 
-                    body:
-                        formData
-
+                    body:formData
                 }
             );
 
@@ -3166,38 +3007,20 @@ async function uploadFile(){
                     await response.json();
 
                 if(data?.error){
-                    message =
-                        data.error;
+                    message = data.error;
                 }
 
             }catch{
 
             }
 
-            throw new Error(
-                message
-            );
-
+            throw new Error(message);
         }
 
 
-        const result =
-            await response.json();
+        input.value = "";
 
-
-        console.log(
-            "UPLOAD RESULT:",
-            result
-        );
-
-
-        input.value =
-            "";
-
-
-        progress.textContent =
-            "";
-
+        progress.textContent = "";
 
         toast(
             "File uploaded successfully."
@@ -3215,8 +3038,7 @@ async function uploadFile(){
         );
 
 
-        progress.textContent =
-            "";
+        progress.textContent = "";
 
 
         toast(
@@ -3227,11 +3049,9 @@ async function uploadFile(){
 
     }finally{
 
-        button.disabled =
-            false;
+        button.disabled = false;
 
     }
-
 }
 
 
@@ -3248,7 +3068,6 @@ async function deleteFile(fileName){
     ){
 
         return;
-
     }
 
 
@@ -3262,17 +3081,14 @@ async function deleteFile(fileName){
             await fetch(
                 FILE_API +
                 "/files/" +
-                fileName,
+                encodeURIComponent(fileName),
                 {
-
-                    method:
-                        "DELETE",
+                    method:"DELETE",
 
                     headers:{
                         "Authorization":
                             "Bearer " + token
                     }
-
                 }
             );
 
@@ -3288,18 +3104,14 @@ async function deleteFile(fileName){
                     await response.json();
 
                 if(data?.error){
-                    message =
-                        data.error;
+                    message = data.error;
                 }
 
             }catch{
 
             }
 
-            throw new Error(
-                message
-            );
-
+            throw new Error(message);
         }
 
 
@@ -3323,9 +3135,7 @@ async function deleteFile(fileName){
             "Unable to delete file: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -3345,17 +3155,14 @@ async function openFile(fileName){
             await fetch(
                 FILE_API +
                 "/files/" +
-                fileName,
+                encodeURIComponent(fileName),
                 {
-
-                    method:
-                        "GET",
+                    method:"GET",
 
                     headers:{
                         "Authorization":
                             "Bearer " + token
                     }
-
                 }
             );
 
@@ -3371,18 +3178,14 @@ async function openFile(fileName){
                     await response.json();
 
                 if(data?.error){
-                    message =
-                        data.error;
+                    message = data.error;
                 }
 
             }catch{
 
             }
 
-            throw new Error(
-                message
-            );
-
+            throw new Error(message);
         }
 
 
@@ -3391,9 +3194,7 @@ async function openFile(fileName){
 
 
         const url =
-            URL.createObjectURL(
-                blob
-            );
+            URL.createObjectURL(blob);
 
 
         window.open(
@@ -3422,347 +3223,7 @@ async function openFile(fileName){
             "Unable to open file: " +
             error.message
         );
-
     }
-
-}
-
-
-/* ============================================================
-   LOAD FILES
-   ============================================================ */
-
-function loadFiles(){
-
-    if(currentFilesUnsubscribe){
-
-        currentFilesUnsubscribe();
-
-    }
-
-
-    const filesQuery =
-        query(
-            collection(db,"files"),
-            where(
-                "ownerId",
-                "==",
-                currentUser.uid
-            ),
-            orderBy(
-                "createdAt",
-                "desc"
-            )
-        );
-
-
-    currentFilesUnsubscribe =
-        onSnapshot(
-            filesQuery,
-
-            snapshot => {
-
-                const container =
-                    document.getElementById(
-                        "files-list"
-                    );
-
-
-                if(!container){
-                    return;
-                }
-
-
-                if(snapshot.empty){
-
-                    container.innerHTML = `
-
-                        <div class="empty">
-
-                            No files yet.
-
-                        </div>
-
-                    `;
-
-                    return;
-
-                }
-
-
-                let html = "";
-
-
-                snapshot.forEach(
-                    fileDoc => {
-
-                        const file =
-                            fileDoc.data();
-
-
-                        html += `
-
-                            <div class="file-row">
-
-                                <div class="file-icon">
-                                    📄
-                                </div>
-
-                                <div class="file-info">
-
-                                    <div class="file-name">
-                                        ${escapeHTML(file.name)}
-                                    </div>
-
-                                    <div class="file-meta">
-
-                                        ${escapeHTML(file.ownerName || "")}
-
-                                        ·
-
-                                        ${formatDate(file.createdAt)}
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="file-actions">
-
-                                    <button
-                                        class="btn btn-secondary"
-                                        onclick="window.openFile('${encodeURI(file.url)}')"
-                                    >
-                                        Open
-                                    </button>
-
-
-                                    <button
-                                        class="btn btn-danger"
-                                        onclick="window.deleteFile('${fileDoc.id}')"
-                                    >
-                                        Delete
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                        `;
-
-                    }
-                );
-
-
-                container.innerHTML =
-                    html;
-
-            },
-
-            error => {
-
-                console.error(
-                    "FILES ERROR:",
-                    error
-                );
-
-
-                const container =
-                    document.getElementById(
-                        "files-list"
-                    );
-
-
-                if(container){
-
-                    container.innerHTML = `
-
-                        <div class="empty">
-
-                            Unable to load files.
-
-                            <br><br>
-
-                            <small>
-                                ${escapeHTML(error.message)}
-                            </small>
-
-                        </div>
-
-                    `;
-
-                }
-
-            }
-        );
-
-}
-
-
-/* ============================================================
-   ADD FILE LINK
-   ============================================================ */
-
-async function addFileLink(){
-
-    const name =
-        document.getElementById(
-            "file-name"
-        ).value.trim();
-
-
-    const url =
-        document.getElementById(
-            "file-url"
-        ).value.trim();
-
-
-    if(!name){
-
-        toast(
-            "Enter a file name."
-        );
-
-        return;
-
-    }
-
-
-    if(!url){
-
-        toast(
-            "Enter a file URL."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        new URL(url);
-
-    }catch{
-
-        toast(
-            "Please enter a valid URL."
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        await addDoc(
-            collection(db,"files"),
-            {
-
-                name:
-                    name,
-
-                url:
-                    url,
-
-                ownerId:
-                    currentUser.uid,
-
-                ownerName:
-                    currentProfile.displayName,
-
-                createdAt:
-                    serverTimestamp()
-
-            }
-        );
-
-
-        document.getElementById(
-            "file-name"
-        ).value = "";
-
-
-        document.getElementById(
-            "file-url"
-        ).value = "";
-
-
-        toast(
-            "File added."
-        );
-
-
-    }catch(error){
-
-        toast(
-            "Unable to add file: " +
-            error.message
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   DELETE FILE RECORD
-   ============================================================ */
-
-async function deleteFile(fileId){
-
-    if(
-        !confirm(
-            "Remove this file link?"
-        )
-    ){
-
-        return;
-
-    }
-
-
-    try{
-
-        await deleteDoc(
-            doc(
-                db,
-                "files",
-                fileId
-            )
-        );
-
-
-        toast(
-            "File removed."
-        );
-
-
-    }catch(error){
-
-        toast(
-            "Unable to remove file: " +
-            error.message
-        );
-
-    }
-
-}
-
-
-/* ============================================================
-   OPEN FILE
-   ============================================================ */
-
-function openFile(url){
-
-    window.open(
-        url,
-        "_blank",
-        "noopener,noreferrer"
-    );
-
 }
 
 
@@ -3859,7 +3320,6 @@ async function renderGroups(){
             `;
 
             return;
-
         }
 
 
@@ -3875,15 +3335,13 @@ async function renderGroups(){
 
                 html += `
 
-                    <div
-                        class="card group-card"
-                    >
+                    <div class="card group-card">
 
                         <div style="
-                            font-size:32px;
+                            font-size:24px;
                             margin-bottom:10px
                         ">
-                            Group
+                            GROUP
                         </div>
 
                         <h3>
@@ -3902,24 +3360,26 @@ async function renderGroups(){
                     </div>
 
                 `;
-
             }
         );
 
 
-        container.innerHTML =
-            html;
+        container.innerHTML = html;
 
 
     }catch(error){
+
+        console.error(
+            "GROUPS ERROR:",
+            error
+        );
+
 
         toast(
             "Unable to load groups: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -3935,7 +3395,7 @@ async function createGroup(){
         );
 
 
-    if(!name){
+    if(!name || !name.trim()){
         return;
     }
 
@@ -3952,11 +3412,9 @@ async function createGroup(){
             collection(db,"groups"),
             {
 
-                name:
-                    name.trim(),
+                name:name.trim(),
 
-                description:
-                    description.trim(),
+                description:description.trim(),
 
                 ownerId:
                     currentUser.uid,
@@ -3977,18 +3435,22 @@ async function createGroup(){
         );
 
 
-        renderGroups();
+        await renderGroups();
 
 
     }catch(error){
+
+        console.error(
+            "CREATE GROUP ERROR:",
+            error
+        );
+
 
         toast(
             "Unable to create group: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -3999,16 +3461,12 @@ async function createGroup(){
 async function renderAdmin(){
 
     if(
-        currentProfile.role !==
-        "admin"
+        currentProfile.role !== "admin"
     ){
 
-        navigate(
-            "dashboard"
-        );
+        navigate("dashboard");
 
         return;
-
     }
 
 
@@ -4063,12 +3521,11 @@ async function renderAdmin(){
     await loadPendingUsers();
 
     await loadApprovedUsers();
-
 }
 
 
 /* ============================================================
-   PENDING USERS
+   LOAD PENDING USERS
    ============================================================ */
 
 async function loadPendingUsers(){
@@ -4099,15 +3556,12 @@ async function loadPendingUsers(){
             container.innerHTML = `
 
                 <div class="empty">
-
                     No pending accounts.
-
                 </div>
 
             `;
 
             return;
-
         }
 
 
@@ -4145,7 +3599,7 @@ async function loadPendingUsers(){
 
                         <button
                             class="btn btn-success"
-                            onclick="window.approveUser('${userDoc.id}')"
+                            onclick="window.approveUser(${safeJson(userDoc.id)})"
                         >
                             Approve
                         </button>
@@ -4153,7 +3607,7 @@ async function loadPendingUsers(){
 
                         <button
                             class="btn btn-danger"
-                            onclick="window.rejectUser('${userDoc.id}')"
+                            onclick="window.rejectUser(${safeJson(userDoc.id)})"
                         >
                             Reject
                         </button>
@@ -4161,13 +3615,11 @@ async function loadPendingUsers(){
                     </div>
 
                 `;
-
             }
         );
 
 
-        container.innerHTML =
-            html;
+        container.innerHTML = html;
 
 
     }catch(error){
@@ -4193,14 +3645,12 @@ async function loadPendingUsers(){
             </div>
 
         `;
-
     }
-
 }
 
 
 /* ============================================================
-   APPROVED USERS
+   LOAD APPROVED USERS
    ============================================================ */
 
 async function loadApprovedUsers(){
@@ -4231,15 +3681,12 @@ async function loadApprovedUsers(){
             container.innerHTML = `
 
                 <div class="empty">
-
                     No approved members.
-
                 </div>
 
             `;
 
             return;
-
         }
 
 
@@ -4277,49 +3724,45 @@ async function loadApprovedUsers(){
 
                         ${
                             user.role === "admin"
-
                             ? `
                                 <span class="badge badge-admin">
                                     ADMIN
                                 </span>
                               `
-
                             : ""
-
                         }
 
 
                         ${
                             userDoc.id !== currentUser.uid
-
                             ? `
-
                                 <button
                                     class="btn btn-danger"
-                                    onclick="window.removeMember('${userDoc.id}')"
+                                    onclick="window.removeMember(${safeJson(userDoc.id)})"
                                 >
                                     Remove
                                 </button>
-
                               `
-
                             : ""
-
                         }
 
                     </div>
 
                 `;
-
             }
         );
 
 
-        container.innerHTML =
-            html;
+        container.innerHTML = html;
 
 
     }catch(error){
+
+        console.error(
+            "APPROVED USERS ERROR:",
+            error
+        );
+
 
         container.innerHTML = `
 
@@ -4336,9 +3779,7 @@ async function loadApprovedUsers(){
             </div>
 
         `;
-
     }
-
 }
 
 
@@ -4358,8 +3799,7 @@ async function approveUser(uid){
             ),
             {
 
-                status:
-                    "approved",
+                status:"approved",
 
                 approvedBy:
                     currentUser.uid,
@@ -4381,13 +3821,17 @@ async function approveUser(uid){
 
     }catch(error){
 
+        console.error(
+            "APPROVE USER ERROR:",
+            error
+        );
+
+
         toast(
             "Unable to approve member: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -4407,8 +3851,7 @@ async function rejectUser(uid){
             ),
             {
 
-                status:
-                    "rejected",
+                status:"rejected",
 
                 rejectedBy:
                     currentUser.uid,
@@ -4430,13 +3873,17 @@ async function rejectUser(uid){
 
     }catch(error){
 
+        console.error(
+            "REJECT USER ERROR:",
+            error
+        );
+
+
         toast(
             "Unable to reject account: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -4453,7 +3900,6 @@ async function removeMember(uid){
     ){
 
         return;
-
     }
 
 
@@ -4466,10 +3912,7 @@ async function removeMember(uid){
                 uid
             ),
             {
-
-                status:
-                    "rejected"
-
+                status:"rejected"
             }
         );
 
@@ -4484,13 +3927,17 @@ async function removeMember(uid){
 
     }catch(error){
 
+        console.error(
+            "REMOVE MEMBER ERROR:",
+            error
+        );
+
+
         toast(
             "Unable to remove member: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -4553,7 +4000,7 @@ function renderProfile(){
 
                 <div class="form-group">
 
-                    <label>
+                    <label for="profile-name">
                         Display name
                     </label>
 
@@ -4578,7 +4025,6 @@ function renderProfile(){
         </div>
 
     `;
-
 }
 
 
@@ -4594,6 +4040,11 @@ async function saveProfile(){
         );
 
 
+    if(!input){
+        return;
+    }
+
+
     const name =
         input.value.trim();
 
@@ -4605,7 +4056,6 @@ async function saveProfile(){
         );
 
         return;
-
     }
 
 
@@ -4618,10 +4068,7 @@ async function saveProfile(){
                 currentUser.uid
             ),
             {
-
-                displayName:
-                    name
-
+                displayName:name
             }
         );
 
@@ -4629,10 +4076,7 @@ async function saveProfile(){
         await updateProfile(
             currentUser,
             {
-
-                displayName:
-                    name
-
+                displayName:name
             }
         );
 
@@ -4651,13 +4095,17 @@ async function saveProfile(){
 
     }catch(error){
 
+        console.error(
+            "SAVE PROFILE ERROR:",
+            error
+        );
+
+
         toast(
             "Unable to update profile: " +
             error.message
         );
-
     }
-
 }
 
 
@@ -4667,13 +4115,8 @@ async function saveProfile(){
 
 function globalSearch(event){
 
-    if(
-        event.key !==
-        "Enter"
-    ){
-
+    if(event.key !== "Enter"){
         return;
-
     }
 
 
@@ -4687,10 +4130,8 @@ function globalSearch(event){
 
 
     toast(
-        "Search: " +
-        value
+        "Search: " + value
     );
-
 }
 
 
@@ -4711,9 +4152,7 @@ function toggleSidebar(){
         sidebar.classList.toggle(
             "open"
         );
-
     }
-
 }
 
 
@@ -4723,37 +4162,36 @@ function toggleSidebar(){
 
 async function logout(){
 
-    if(currentChatUnsubscribe){
+    try{
 
-        currentChatUnsubscribe();
+        if(currentChatUnsubscribe){
 
-        currentChatUnsubscribe =
-            null;
+            currentChatUnsubscribe();
 
+            currentChatUnsubscribe = null;
+
+        }
+
+
+        currentChatId = null;
+
+
+        await signOut(auth);
+
+
+    }catch(error){
+
+        console.error(
+            "LOGOUT ERROR:",
+            error
+        );
+
+
+        toast(
+            "Unable to sign out: " +
+            error.message
+        );
     }
-
-
-    if(currentFilesUnsubscribe){
-
-        currentFilesUnsubscribe();
-
-        currentFilesUnsubscribe =
-            null;
-
-    }
-
-
-    currentUser =
-        null;
-
-    currentProfile =
-        null;
-
-
-    await signOut(
-        auth
-    );
-
 }
 
 
@@ -4778,9 +4216,6 @@ window.openChat =
 
 window.sendMessage =
     sendMessage;
-
-window.addFileLink =
-    addFileLink;
 
 window.uploadFile =
     uploadFile;
@@ -4831,10 +4266,12 @@ onAuthStateChanged(
             currentProfile =
                 null;
 
+            currentChatId =
+                null;
+
             renderAuth();
 
             return;
-
         }
 
 
@@ -4863,6 +4300,7 @@ onAuthStateChanged(
                             <img
                                 class="auth-logo"
                                 src="https://balmuildyprimaryschool.tdf1.uk/balmuildy.png"
+                                alt="Balmuildy logo"
                             >
 
                             <div class="auth-title">
@@ -4897,7 +4335,6 @@ onAuthStateChanged(
                 `;
 
                 return;
-
             }
 
 
@@ -4912,6 +4349,11 @@ onAuthStateChanged(
 
                 currentView =
                     hash;
+
+            }else{
+
+                currentView =
+                    "dashboard";
 
             }
 
@@ -4941,7 +4383,8 @@ onAuthStateChanged(
 
                         <p style="
                             color:var(--muted);
-                            text-align:center
+                            text-align:center;
+                            line-height:1.6
                         ">
                             ${escapeHTML(error.message)}
                         </p>
@@ -4959,11 +4402,9 @@ onAuthStateChanged(
                 </div>
 
             `;
-
         }
 
     }
-
 );
 
 
@@ -4973,8 +4414,11 @@ onAuthStateChanged(
 
 if(!location.hash){
 
-    location.hash =
-        "dashboard";
+    history.replaceState(
+        null,
+        "",
+        "#dashboard"
+    );
 
 }
 
