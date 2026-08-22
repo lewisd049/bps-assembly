@@ -2694,6 +2694,29 @@ async function sendMessage(event){
    FILES
    ============================================================ */
 
+const FILE_API =
+    "https://api.assets.balmuildyprimaryschool.tdf1.uk";
+
+
+async function getFileAuthToken(){
+
+    if(!currentUser){
+
+        throw new Error(
+            "You must be signed in to upload files."
+        );
+
+    }
+
+    return await currentUser.getIdToken();
+
+}
+
+
+/* ============================================================
+   FILES PAGE
+   ============================================================ */
+
 async function renderFiles(){
 
     const page =
@@ -2716,41 +2739,24 @@ async function renderFiles(){
             <div class="card-body">
 
                 <h3>
-                    Add a file
+                    Upload a file
                 </h3>
 
                 <p style="color:var(--muted)">
-                    Balmuildy Assembly stores file links
-                    in Firestore. The actual file can be
-                    hosted on a free service such as
-                    Google Drive or OneDrive.
+                    Upload a file to the Balmuildy Assembly
+                    file server.
                 </p>
 
 
                 <div class="form-group">
 
                     <label>
-                        File name
+                        Select file
                     </label>
 
                     <input
-                        id="file-name"
-                        placeholder="Example: Assembly timetable.pdf"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        File URL
-                    </label>
-
-                    <input
-                        id="file-url"
-                        type="url"
-                        placeholder="https://..."
+                        id="file-upload"
+                        type="file"
                     >
 
                 </div>
@@ -2758,10 +2764,20 @@ async function renderFiles(){
 
                 <button
                     class="btn btn-primary"
-                    onclick="window.addFileLink()"
+                    id="upload-file-button"
+                    onclick="window.uploadFile()"
                 >
-                    Add file
+                    Upload file
                 </button>
+
+
+                <div
+                    id="upload-progress"
+                    style="
+                        margin-top:12px;
+                        color:var(--muted);
+                    "
+                ></div>
 
             </div>
 
@@ -2776,6 +2792,13 @@ async function renderFiles(){
                     Shared files
                 </strong>
 
+                <button
+                    class="btn btn-secondary"
+                    onclick="window.loadFiles()"
+                >
+                    Refresh
+                </button>
+
             </div>
 
             <div id="files-list">
@@ -2788,6 +2811,619 @@ async function renderFiles(){
 
 
     loadFiles();
+
+}
+
+
+/* ============================================================
+   LOAD FILES
+   ============================================================ */
+
+async function loadFiles(){
+
+    const container =
+        document.getElementById(
+            "files-list"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    container.innerHTML = `
+
+        <div class="empty">
+            Loading files...
+        </div>
+
+    `;
+
+
+    try{
+
+        const token =
+            await getFileAuthToken();
+
+
+        const response =
+            await fetch(
+                FILE_API + "/files",
+                {
+
+                    method:
+                        "GET",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            let message =
+                "Unable to load files.";
+
+            try{
+
+                const data =
+                    await response.json();
+
+                if(data?.error){
+                    message =
+                        data.error;
+                }
+
+            }catch{
+
+            }
+
+            throw new Error(
+                message
+            );
+
+        }
+
+
+        const files =
+            await response.json();
+
+
+        if(
+            !Array.isArray(files) ||
+            files.length === 0
+        ){
+
+            container.innerHTML = `
+
+                <div class="empty">
+
+                    No files yet.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        let html = "";
+
+
+        files.forEach(
+            file => {
+
+                const fileName =
+                    file.name ||
+                    file.filename ||
+                    "Unnamed file";
+
+
+                const fileUrl =
+                    file.url ||
+                    (
+                        FILE_API +
+                        "/files/" +
+                        encodeURIComponent(
+                            fileName
+                        )
+                    );
+
+
+                const ownerName =
+                    file.ownerName ||
+                    "";
+
+
+                const createdAt =
+                    file.createdAt
+                    ? new Date(
+                        file.createdAt
+                    ).toLocaleString()
+                    : "";
+
+
+                html += `
+
+                    <div class="file-row">
+
+                        <div class="file-icon">
+                            📄
+                        </div>
+
+                        <div class="file-info">
+
+                            <div class="file-name">
+                                ${escapeHTML(fileName)}
+                            </div>
+
+                            <div class="file-meta">
+
+                                ${escapeHTML(ownerName)}
+
+                                ${
+                                    ownerName && createdAt
+                                    ? " · "
+                                    : ""
+                                }
+
+                                ${escapeHTML(createdAt)}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="file-actions">
+
+                            <button
+                                class="btn btn-secondary"
+                                onclick="window.openFile(
+                                    '${encodeURIComponent(fileName)}'
+                                )"
+                            >
+                                Open
+                            </button>
+
+
+                            <button
+                                class="btn btn-danger"
+                                onclick="window.deleteFile(
+                                    '${encodeURIComponent(fileName)}'
+                                )"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        container.innerHTML =
+            html;
+
+
+    }catch(error){
+
+        console.error(
+            "FILES ERROR:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                Unable to load files.
+
+                <br><br>
+
+                <small>
+                    ${escapeHTML(error.message)}
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ============================================================
+   UPLOAD FILE
+   ============================================================ */
+
+async function uploadFile(){
+
+    const input =
+        document.getElementById(
+            "file-upload"
+        );
+
+
+    const progress =
+        document.getElementById(
+            "upload-progress"
+        );
+
+
+    const button =
+        document.getElementById(
+            "upload-file-button"
+        );
+
+
+    if(!input){
+
+        return;
+
+    }
+
+
+    if(!input.files || !input.files.length){
+
+        toast(
+            "Please select a file."
+        );
+
+        return;
+
+    }
+
+
+    const file =
+        input.files[0];
+
+
+    try{
+
+        button.disabled =
+            true;
+
+
+        progress.textContent =
+            "Uploading " +
+            file.name +
+            "...";
+
+
+        const token =
+            await getFileAuthToken();
+
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "file",
+            file
+        );
+
+
+        formData.append(
+            "ownerId",
+            currentUser.uid
+        );
+
+
+        formData.append(
+            "ownerName",
+            currentProfile.displayName
+        );
+
+
+        formData.append(
+            "ownerEmail",
+            currentProfile.email
+        );
+
+
+        const response =
+            await fetch(
+                FILE_API + "/upload",
+                {
+
+                    method:
+                        "POST",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    },
+
+                    body:
+                        formData
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            let message =
+                "Upload failed.";
+
+            try{
+
+                const data =
+                    await response.json();
+
+                if(data?.error){
+                    message =
+                        data.error;
+                }
+
+            }catch{
+
+            }
+
+            throw new Error(
+                message
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        console.log(
+            "UPLOAD RESULT:",
+            result
+        );
+
+
+        input.value =
+            "";
+
+
+        progress.textContent =
+            "";
+
+
+        toast(
+            "File uploaded successfully."
+        );
+
+
+        await loadFiles();
+
+
+    }catch(error){
+
+        console.error(
+            "UPLOAD ERROR:",
+            error
+        );
+
+
+        progress.textContent =
+            "";
+
+
+        toast(
+            "Unable to upload file: " +
+            error.message
+        );
+
+
+    }finally{
+
+        button.disabled =
+            false;
+
+    }
+
+}
+
+
+/* ============================================================
+   DELETE FILE
+   ============================================================ */
+
+async function deleteFile(fileName){
+
+    if(
+        !confirm(
+            "Delete this file?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const token =
+            await getFileAuthToken();
+
+
+        const response =
+            await fetch(
+                FILE_API +
+                "/files/" +
+                fileName,
+                {
+
+                    method:
+                        "DELETE",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            let message =
+                "Unable to delete file.";
+
+            try{
+
+                const data =
+                    await response.json();
+
+                if(data?.error){
+                    message =
+                        data.error;
+                }
+
+            }catch{
+
+            }
+
+            throw new Error(
+                message
+            );
+
+        }
+
+
+        toast(
+            "File deleted."
+        );
+
+
+        await loadFiles();
+
+
+    }catch(error){
+
+        console.error(
+            "DELETE FILE ERROR:",
+            error
+        );
+
+
+        toast(
+            "Unable to delete file: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   OPEN FILE
+   ============================================================ */
+
+async function openFile(fileName){
+
+    try{
+
+        const token =
+            await getFileAuthToken();
+
+
+        const response =
+            await fetch(
+                FILE_API +
+                "/files/" +
+                fileName,
+                {
+
+                    method:
+                        "GET",
+
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            let message =
+                "Unable to open file.";
+
+            try{
+
+                const data =
+                    await response.json();
+
+                if(data?.error){
+                    message =
+                        data.error;
+                }
+
+            }catch{
+
+            }
+
+            throw new Error(
+                message
+            );
+
+        }
+
+
+        const blob =
+            await response.blob();
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        window.open(
+            url,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+
+        setTimeout(
+            () =>
+                URL.revokeObjectURL(url),
+            60000
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "OPEN FILE ERROR:",
+            error
+        );
+
+
+        toast(
+            "Unable to open file: " +
+            error.message
+        );
+
+    }
 
 }
 
@@ -4145,6 +4781,12 @@ window.sendMessage =
 
 window.addFileLink =
     addFileLink;
+
+window.uploadFile =
+    uploadFile;
+
+window.loadFiles =
+    loadFiles;
 
 window.deleteFile =
     deleteFile;
