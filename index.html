@@ -1,71 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>Balmuildy Assembly</title>
-
-<link rel="icon"
-href="https://balmuildyprimaryschool.tdf1.uk/balmuildy.png">
+<link rel="icon" href="https://balmuildyprimaryschool.tdf1.uk/balmuildy.png">
 
 <style>
-
 :root{
     --accent:#5b5fc7;
     --accent-dark:#4648a8;
     --bg:#f5f5f7;
-    --panel:#ffffff;
+    --panel:#fff;
     --panel2:#f0f1f5;
     --text:#202124;
     --muted:#6b6f76;
     --border:#e1e2e6;
     --danger:#d93025;
     --success:#16803c;
-    --warning:#795900;
     --shadow:0 8px 30px rgba(0,0,0,.08);
 }
 
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html,
-body{
+html,body{
     margin:0;
     padding:0;
     width:100%;
-    min-height:100%;
+    height:100%;
     font-family:Inter,Segoe UI,Arial,sans-serif;
     background:var(--bg);
     color:var(--text);
 }
 
-body{
-    min-height:100vh;
-}
-
-button,
-input,
-textarea,
-select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-button:disabled{
-    cursor:not-allowed;
-    opacity:.6;
-}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 
 .app{
     display:flex;
     width:100%;
-    min-height:100vh;
+    height:100vh;
     overflow:hidden;
 }
 
@@ -95,10 +69,7 @@ button:disabled{
     padding:3px;
 }
 
-.brand-text{
-    font-weight:700;
-}
-
+.brand-text{font-weight:700}
 .brand-text small{
     display:block;
     opacity:.6;
@@ -106,9 +77,7 @@ button:disabled{
     margin-top:2px;
 }
 
-.nav{
-    padding:12px;
-}
+.nav{padding:12px}
 
 .nav button{
     width:100%;
@@ -164,21 +133,17 @@ button:disabled{
     text-overflow:ellipsis;
 }
 
-.user-mini-info small{
-    color:#aaa;
-}
+.user-mini-info small{color:#aaa}
 
 .main{
     flex:1;
     min-width:0;
-    min-height:100vh;
     display:flex;
     flex-direction:column;
 }
 
 .topbar{
     height:64px;
-    min-height:64px;
     background:var(--panel);
     border-bottom:1px solid var(--border);
     display:flex;
@@ -208,9 +173,7 @@ button:disabled{
     outline:none;
 }
 
-.search input:focus{
-    border-color:var(--accent);
-}
+.search input:focus{border-color:var(--accent)}
 
 .top-actions{
     margin-left:auto;
@@ -224,12 +187,9 @@ button:disabled{
     border:0;
     border-radius:8px;
     background:transparent;
-    font-weight:700;
 }
 
-.icon-btn:hover{
-    background:var(--panel2);
-}
+.icon-btn:hover{background:var(--panel2)}
 
 .content{
     flex:1;
@@ -253,9 +213,7 @@ button:disabled{
     gap:10px;
 }
 
-.card-body{
-    padding:18px;
-}
+.card-body{padding:18px}
 
 .grid{
     display:grid;
@@ -263,10 +221,7 @@ button:disabled{
     gap:18px;
 }
 
-.stat{
-    padding:20px;
-}
-
+.stat{padding:20px}
 .stat-number{
     font-size:30px;
     font-weight:700;
@@ -289,9 +244,7 @@ button:disabled{
     color:white;
 }
 
-.btn-primary:hover{
-    background:var(--accent-dark);
-}
+.btn-primary:hover{background:var(--accent-dark)}
 
 .btn-secondary{
     background:var(--panel2);
@@ -306,6 +259,11 @@ button:disabled{
 .btn-success{
     background:var(--success);
     color:white;
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
 .auth-screen{
@@ -349,9 +307,7 @@ button:disabled{
     margin:8px 0 25px;
 }
 
-.form-group{
-    margin-bottom:16px;
-}
+.form-group{margin-bottom:16px}
 
 .form-group label{
     display:block;
@@ -393,13 +349,10 @@ button:disabled{
     display:grid;
     grid-template-columns:280px 1fr;
     height:calc(100vh - 114px);
-    min-height:500px;
     gap:15px;
 }
 
-.chat-list{
-    overflow:auto;
-}
+.chat-list{overflow:auto}
 
 .chat-item{
     padding:13px;
@@ -442,9 +395,7 @@ button:disabled{
     margin-bottom:16px;
 }
 
-.message.mine{
-    flex-direction:row-reverse;
-}
+.message.mine{flex-direction:row-reverse}
 
 .message-bubble{
     max-width:70%;
@@ -452,12 +403,9 @@ button:disabled{
     border:1px solid var(--border);
     padding:10px 13px;
     border-radius:12px;
-    overflow-wrap:anywhere;
 }
 
-.mine .message-bubble{
-    background:#e6e7ff;
-}
+.mine .message-bubble{background:#e6e7ff}
 
 .message-name{
     font-size:12px;
@@ -470,6 +418,31 @@ button:disabled{
     font-size:10px;
     color:var(--muted);
     margin-top:5px;
+}
+
+.message-actions{
+    display:flex;
+    gap:5px;
+    margin-top:7px;
+}
+
+.message-actions button{
+    border:0;
+    background:none;
+    color:var(--accent);
+    font-size:11px;
+    padding:2px 4px;
+}
+
+.edited-tag{
+    color:var(--muted);
+    font-size:10px;
+    margin-left:5px;
+}
+
+.deleted-message{
+    color:var(--muted);
+    font-style:italic;
 }
 
 .chat-input{
@@ -498,13 +471,9 @@ button:disabled{
     border-bottom:1px solid var(--border);
 }
 
-.file-row:last-child{
-    border-bottom:0;
-}
+.file-row:last-child{border-bottom:0}
 
-.file-icon{
-    font-size:26px;
-}
+.file-icon{font-size:26px}
 
 .file-info{
     flex:1;
@@ -530,15 +499,41 @@ button:disabled{
     flex-wrap:wrap;
 }
 
+.folder-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px;
+    cursor:pointer;
+    border-bottom:1px solid var(--border);
+}
+
+.folder-row:hover{background:var(--panel2)}
+
+.folder-icon{font-size:25px}
+
+.breadcrumbs{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.breadcrumbs button{
+    border:0;
+    background:none;
+    color:var(--accent);
+    padding:3px;
+}
+
 .group-card{
     padding:20px;
     cursor:pointer;
     transition:.15s;
 }
 
-.group-card:hover{
-    transform:translateY(-2px);
-}
+.group-card:hover{transform:translateY(-2px)}
 
 .badge{
     display:inline-block;
@@ -591,8 +586,27 @@ button:disabled{
     max-width:400px;
 }
 
-@media(max-width:800px){
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:1500;
+}
 
+.modal-card{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:14px;
+    box-shadow:0 20px 70px rgba(0,0,0,.2);
+    padding:22px;
+}
+
+@media(max-width:800px){
     .sidebar{
         position:fixed;
         z-index:900;
@@ -600,61 +614,33 @@ button:disabled{
         top:0;
         bottom:0;
         transition:.2s;
-        height:100vh;
     }
 
-    .sidebar.open{
-        left:0;
-    }
+    .sidebar.open{left:0}
 
-    .mobile-menu{
-        display:block;
-    }
+    .mobile-menu{display:block}
 
     .chat-layout{
         grid-template-columns:1fr;
         height:auto;
-        min-height:0;
     }
 
-    .chat-list{
-        max-height:180px;
-    }
+    .chat-list{max-height:180px}
 
-    .chat-main{
-        min-height:500px;
-    }
+    .content{padding:15px}
 
-    .content{
-        padding:15px;
-    }
+    .topbar{padding:0 12px}
 
-    .topbar{
-        padding:0 12px;
-    }
+    .search{max-width:none}
 
-    .search{
-        max-width:none;
-    }
-
-    .file-row{
-        align-items:flex-start;
-        flex-wrap:wrap;
-    }
-
-    .file-info{
-        min-width:calc(100% - 60px);
-    }
-
+    .message-bubble{max-width:85%}
 }
-
 </style>
 </head>
 
 <body>
 
 <div id="root"></div>
-
 <div id="toast-container" class="toast-container"></div>
 
 <script type="module">
@@ -681,6 +667,7 @@ import {
     getDoc,
     getDocs,
     updateDoc,
+    deleteDoc,
     query,
     where,
     orderBy,
@@ -689,13 +676,17 @@ import {
     limit
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
+import {
+    createClient
+} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
 
 /* ============================================================
-   FIREBASE CONFIG
+   FIREBASE
    ============================================================ */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyClL16WbunPflZ6zZeHfif2K3XVBUlijBk",
+    apiKey: "AIzaSyClL16WbunPflZ6zZeHfifK2X3KVBUlijBk",
     authDomain: "balmuildyprimaryschool.firebaseapp.com",
     projectId: "balmuildyprimaryschool",
     storageBucket: "balmuildyprimaryschool.firebasestorage.app",
@@ -706,38 +697,62 @@ const firebaseConfig = {
 
 
 /* ============================================================
-   INITIALISE FIREBASE
+   SUPABASE
    ============================================================ */
 
-const app = initializeApp(firebaseConfig);
+const SUPABASE_URL =
+    "https://ehcbvkgdhflzxrahwylw.supabase.co";
 
-const auth = getAuth(app);
+/*
+   IMPORTANT:
 
-const db = getFirestore(app);
+   Replace this with your Supabase anon/publishable key.
+
+   NEVER put your Supabase service_role key here.
+*/
+
+const SUPABASE_ANON_KEY =
+    "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+const SUPABASE_BUCKET =
+    "balmuildy-files";
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+const supabase =
+    createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
 
 /* ============================================================
-   GLOBAL STATE
+   STATE
    ============================================================ */
 
 let currentUser = null;
-
 let currentProfile = null;
 
 let currentView =
-    location.hash.replace("#","") || "dashboard";
+    location.hash.replace("#","") ||
+    "dashboard";
 
 let currentChatId = null;
+let currentChatName = null;
 
 let currentChatUnsubscribe = null;
+let currentFilesUnsubscribe = null;
 
-
-/* ============================================================
-   FILE API
-   ============================================================ */
-
-const FILE_API =
-    "https://api.assets.balmuildyprimaryschool.tdf1.uk";
+let currentFolder = "";
 
 
 /* ============================================================
@@ -788,7 +803,6 @@ function toast(message){
         document.createElement("div");
 
     item.className = "toast";
-
     item.textContent = message;
 
     container.appendChild(item);
@@ -807,54 +821,47 @@ function formatDate(timestamp){
     }
 
     try{
-
-        if(
-            typeof timestamp.toDate === "function"
-        ){
-
-            return timestamp
-                .toDate()
-                .toLocaleString();
-
+        if(typeof timestamp.toDate === "function"){
+            return timestamp.toDate().toLocaleString();
         }
 
-        if(
-            timestamp instanceof Date
-        ){
-
-            return timestamp.toLocaleString();
-
-        }
-
-        const date =
-            new Date(timestamp);
-
-        if(
-            Number.isNaN(
-                date.getTime()
-            )
-        ){
-
-            return "";
-
-        }
-
-        return date.toLocaleString();
+        return new Date(timestamp).toLocaleString();
 
     }catch{
-
         return "";
-
     }
 }
 
 
-function safeJson(value){
+function safePath(path){
 
-    return JSON.stringify(value)
-        .replace(/</g,"\\u003c")
-        .replace(/>/g,"\\u003e")
-        .replace(/&/g,"\\u0026");
+    return String(path || "")
+        .replace(/^\/+/,"")
+        .replace(/\/+/g,"/")
+        .replace(/\.\./g,"");
+}
+
+
+function filePath(){
+
+    return currentFolder
+        ? currentFolder + "/"
+        : "";
+}
+
+
+function publicFileUrl(path){
+
+    return (
+        SUPABASE_URL +
+        "/storage/v1/object/public/" +
+        SUPABASE_BUCKET +
+        "/" +
+        path
+            .split("/")
+            .map(encodeURIComponent)
+            .join("/")
+    );
 }
 
 
@@ -865,7 +872,6 @@ function safeJson(value){
 function navigate(view){
 
     currentView = view;
-
     location.hash = view;
 
     renderApp();
@@ -877,17 +883,16 @@ window.addEventListener(
     () => {
 
         currentView =
-            location.hash.replace("#","")
-            || "dashboard";
+            location.hash.replace("#","") ||
+            "dashboard";
 
         renderApp();
-
     }
 );
 
 
 /* ============================================================
-   LOGIN
+   AUTH
    ============================================================ */
 
 function renderAuth(){
@@ -915,10 +920,7 @@ function renderAuth(){
                 <form id="login-form">
 
                     <div class="form-group">
-
-                        <label for="login-email">
-                            Email
-                        </label>
+                        <label>Email</label>
 
                         <input
                             id="login-email"
@@ -926,14 +928,10 @@ function renderAuth(){
                             autocomplete="email"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
-                        <label for="login-password">
-                            Password
-                        </label>
+                        <label>Password</label>
 
                         <input
                             id="login-password"
@@ -941,7 +939,6 @@ function renderAuth(){
                             autocomplete="current-password"
                             required
                         >
-
                     </div>
 
                     <button
@@ -958,10 +955,7 @@ function renderAuth(){
 
                     Don't have an account?
 
-                    <button
-                        id="show-signup"
-                        type="button"
-                    >
+                    <button id="show-signup">
                         Create account
                     </button>
 
@@ -970,30 +964,17 @@ function renderAuth(){
             </div>
 
         </div>
-
     `;
-
 
     document
         .getElementById("login-form")
-        .addEventListener(
-            "submit",
-            login
-        );
-
+        .addEventListener("submit",login);
 
     document
         .getElementById("show-signup")
-        .addEventListener(
-            "click",
-            renderSignup
-        );
+        .addEventListener("click",renderSignup);
 }
 
-
-/* ============================================================
-   SIGNUP
-   ============================================================ */
 
 function renderSignup(){
 
@@ -1020,10 +1001,7 @@ function renderSignup(){
                 <form id="signup-form">
 
                     <div class="form-group">
-
-                        <label for="signup-name">
-                            Display name
-                        </label>
+                        <label>Display name</label>
 
                         <input
                             id="signup-name"
@@ -1031,14 +1009,10 @@ function renderSignup(){
                             placeholder="Your name"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
-                        <label for="signup-email">
-                            Email
-                        </label>
+                        <label>Email</label>
 
                         <input
                             id="signup-email"
@@ -1046,14 +1020,10 @@ function renderSignup(){
                             autocomplete="email"
                             required
                         >
-
                     </div>
 
                     <div class="form-group">
-
-                        <label for="signup-password">
-                            Password
-                        </label>
+                        <label>Password</label>
 
                         <input
                             id="signup-password"
@@ -1062,7 +1032,6 @@ function renderSignup(){
                             autocomplete="new-password"
                             required
                         >
-
                     </div>
 
                     <button
@@ -1079,10 +1048,7 @@ function renderSignup(){
 
                     Already have an account?
 
-                    <button
-                        id="show-login"
-                        type="button"
-                    >
+                    <button id="show-login">
                         Sign in
                     </button>
 
@@ -1091,30 +1057,17 @@ function renderSignup(){
             </div>
 
         </div>
-
     `;
-
 
     document
         .getElementById("signup-form")
-        .addEventListener(
-            "submit",
-            signup
-        );
-
+        .addEventListener("submit",signup);
 
     document
         .getElementById("show-login")
-        .addEventListener(
-            "click",
-            renderAuth
-        );
+        .addEventListener("click",renderAuth);
 }
 
-
-/* ============================================================
-   LOGIN
-   ============================================================ */
 
 async function login(event){
 
@@ -1122,14 +1075,14 @@ async function login(event){
 
     const email =
         document
-            .getElementById("login-email")
-            .value
-            .trim();
+        .getElementById("login-email")
+        .value
+        .trim();
 
     const password =
         document
-            .getElementById("login-password")
-            .value;
+        .getElementById("login-password")
+        .value;
 
     try{
 
@@ -1141,21 +1094,12 @@ async function login(event){
 
     }catch(error){
 
-        console.error(
-            "LOGIN ERROR:",
-            error
-        );
+        console.error(error);
+        toast(friendlyAuthError(error));
 
-        toast(
-            friendlyAuthError(error)
-        );
     }
 }
 
-
-/* ============================================================
-   SIGNUP
-   ============================================================ */
 
 async function signup(event){
 
@@ -1163,52 +1107,34 @@ async function signup(event){
 
     const name =
         document
-            .getElementById("signup-name")
-            .value
-            .trim();
+        .getElementById("signup-name")
+        .value
+        .trim();
 
     const email =
         document
-            .getElementById("signup-email")
-            .value
-            .trim();
+        .getElementById("signup-email")
+        .value
+        .trim();
 
     const password =
         document
-            .getElementById("signup-password")
-            .value;
-
+        .getElementById("signup-password")
+        .value;
 
     if(!name){
-
         toast("Please enter a display name.");
-
         return;
     }
-
-
-    if(!email){
-
-        toast("Please enter an email address.");
-
-        return;
-    }
-
 
     if(password.length < 8){
-
-        toast(
-            "Password must be at least 8 characters."
-        );
-
+        toast("Password must be at least 8 characters.");
         return;
     }
-
 
     try{
 
         toast("Creating account...");
-
 
         const credential =
             await createUserWithEmailAndPassword(
@@ -1217,138 +1143,88 @@ async function signup(event){
                 password
             );
 
-
         const user =
             credential.user;
 
-
         await updateProfile(
             user,
-            {
-                displayName:name
-            }
+            {displayName:name}
         );
-
 
         await setDoc(
-            doc(
-                db,
-                "users",
-                user.uid
-            ),
+            doc(db,"users",user.uid),
             {
-
                 uid:user.uid,
-
-                email:email,
-
+                email,
                 displayName:name,
-
                 role:"member",
-
                 status:"pending",
-
                 createdAt:serverTimestamp()
-
             }
         );
-
 
         toast(
             "Account created. Waiting for approval."
         );
 
-
         await signOut(auth);
-
 
         renderAuth();
 
-
     }catch(error){
 
-        console.error(
-            "SIGNUP ERROR:",
-            error
-        );
+        console.error(error);
+        toast(friendlyAuthError(error));
 
-        toast(
-            friendlyAuthError(error)
-        );
     }
 }
 
-
-/* ============================================================
-   FIREBASE ERROR MESSAGES
-   ============================================================ */
 
 function friendlyAuthError(error){
 
-    const code =
-        error?.code || "";
+    const code = error?.code || "";
 
+    if(code === "auth/email-already-in-use")
+        return "That email address is already registered.";
 
-    switch(code){
+    if(code === "auth/invalid-email")
+        return "Please enter a valid email address.";
 
-        case "auth/email-already-in-use":
-            return "That email address is already registered.";
+    if(code === "auth/weak-password")
+        return "The password is too weak.";
 
-        case "auth/invalid-email":
-            return "Please enter a valid email address.";
+    if(
+        code === "auth/invalid-credential" ||
+        code === "auth/user-not-found" ||
+        code === "auth/wrong-password"
+    )
+        return "Incorrect email or password.";
 
-        case "auth/weak-password":
-            return "The password is too weak.";
+    if(code === "permission-denied")
+        return "Firestore permission denied.";
 
-        case "auth/invalid-credential":
-            return "Incorrect email or password.";
-
-        case "auth/user-not-found":
-            return "Incorrect email or password.";
-
-        case "auth/wrong-password":
-            return "Incorrect email or password.";
-
-        case "permission-denied":
-            return "Firestore permission denied. Check your Firestore rules.";
-
-        default:
-            return error?.message ||
-                "Something went wrong.";
-
-    }
+    return error?.message || "Something went wrong.";
 }
 
 
 /* ============================================================
-   LOAD PROFILE
+   PROFILE
    ============================================================ */
 
 async function loadProfile(){
 
     if(!currentUser){
-
         return null;
-
     }
-
 
     const snapshot =
         await getDoc(
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            )
+            doc(db,"users",currentUser.uid)
         );
 
-
     if(!snapshot.exists()){
-
         return null;
-
     }
-
 
     return {
         id:snapshot.id,
@@ -1358,71 +1234,45 @@ async function loadProfile(){
 
 
 /* ============================================================
-   MAIN APP
+   APP
    ============================================================ */
 
 function renderApp(){
 
     if(!currentUser){
-
         renderAuth();
-
         return;
-
     }
-
 
     if(!currentProfile){
 
         document.getElementById("root").innerHTML = `
-
             <div class="auth-screen">
-
                 <div class="auth-card">
-
-                    <div class="auth-title">
-                        Loading...
-                    </div>
-
+                    <div class="auth-title">Loading...</div>
                     <p style="text-align:center;color:var(--muted)">
-                        Loading your Balmuildy Assembly account.
+                        Loading your account.
                     </p>
-
                 </div>
-
             </div>
-
         `;
 
         return;
-
     }
 
-
-    if(
-        currentProfile.status !== "approved"
-    ){
-
+    if(currentProfile.status !== "approved"){
         renderPending();
-
         return;
-
     }
-
 
     renderShell();
 }
 
 
-/* ============================================================
-   PENDING / REJECTED
-   ============================================================ */
-
 function renderPending(){
 
     const rejected =
         currentProfile.status === "rejected";
-
 
     document.getElementById("root").innerHTML = `
 
@@ -1433,7 +1283,6 @@ function renderPending(){
                 <img
                     class="auth-logo"
                     src="https://balmuildyprimaryschool.tdf1.uk/balmuildy.png"
-                    alt="Balmuildy logo"
                 >
 
                 <div class="auth-title">
@@ -1454,11 +1303,8 @@ function renderPending(){
 
                     ${
                         rejected
-
-                        ? "Your account has not been approved by an administrator."
-
-                        : "Your account has been created successfully. An administrator needs to approve it before you can use Balmuildy Assembly."
-
+                        ? "Your account has not been approved."
+                        : "An administrator needs to approve your account before you can use Balmuildy Assembly."
                     }
 
                 </p>
@@ -1474,13 +1320,12 @@ function renderPending(){
             </div>
 
         </div>
-
     `;
 }
 
 
 /* ============================================================
-   MAIN SHELL
+   SHELL
    ============================================================ */
 
 function renderShell(){
@@ -1498,7 +1343,6 @@ function renderShell(){
 
                     <img
                         src="https://balmuildyprimaryschool.tdf1.uk/balmuildy.png"
-                        alt="Balmuildy logo"
                     >
 
                     <div class="brand-text">
@@ -1512,7 +1356,6 @@ function renderShell(){
                     </div>
 
                 </div>
-
 
                 <nav class="nav">
 
@@ -1566,7 +1409,6 @@ function renderShell(){
 
                 </nav>
 
-
                 <div class="sidebar-bottom">
 
                     <div class="user-mini">
@@ -1582,13 +1424,12 @@ function renderShell(){
                             </strong>
 
                             <small>
-                                ${escapeHTML(currentProfile.role || "member")}
+                                ${escapeHTML(currentProfile.role)}
                             </small>
 
                         </div>
 
                     </div>
-
 
                     <button
                         class="btn btn-secondary"
@@ -1602,7 +1443,6 @@ function renderShell(){
 
             </aside>
 
-
             <main class="main">
 
                 <header class="topbar">
@@ -1610,7 +1450,6 @@ function renderShell(){
                     <button
                         class="mobile-menu"
                         onclick="window.toggleSidebar()"
-                        aria-label="Open menu"
                     >
                         ☰
                     </button>
@@ -1624,7 +1463,6 @@ function renderShell(){
                         >
 
                     </div>
-
 
                     <div class="top-actions">
 
@@ -1640,7 +1478,6 @@ function renderShell(){
 
                 </header>
 
-
                 <section
                     class="content"
                     id="page-content"
@@ -1649,17 +1486,11 @@ function renderShell(){
             </main>
 
         </div>
-
     `;
-
 
     renderCurrentView();
 }
 
-
-/* ============================================================
-   CURRENT VIEW
-   ============================================================ */
 
 function renderCurrentView(){
 
@@ -1691,8 +1522,6 @@ function renderCurrentView(){
 
         default:
             renderDashboard();
-            break;
-
     }
 }
 
@@ -1706,7 +1535,6 @@ function renderDashboard(){
     const page =
         document.getElementById("page-content");
 
-
     page.innerHTML = `
 
         <h1>
@@ -1718,14 +1546,10 @@ function renderDashboard(){
             Welcome to Balmuildy Assembly.
         </p>
 
-
         <div class="grid">
 
             <div class="card stat">
-
-                <div class="stat-number">
-                    Chat
-                </div>
+                <div class="stat-number">Chat</div>
 
                 <div class="stat-label">
                     Message other members
@@ -1739,18 +1563,13 @@ function renderDashboard(){
                 >
                     Open chat
                 </button>
-
             </div>
 
-
             <div class="card stat">
-
-                <div class="stat-number">
-                    Files
-                </div>
+                <div class="stat-number">Files</div>
 
                 <div class="stat-label">
-                    Manage shared files
+                    Shared files and folders
                 </div>
 
                 <br>
@@ -1761,15 +1580,10 @@ function renderDashboard(){
                 >
                     Open files
                 </button>
-
             </div>
 
-
             <div class="card stat">
-
-                <div class="stat-number">
-                    Groups
-                </div>
+                <div class="stat-number">Groups</div>
 
                 <div class="stat-label">
                     Work together in groups
@@ -1783,38 +1597,9 @@ function renderDashboard(){
                 >
                     Open groups
                 </button>
-
             </div>
 
         </div>
-
-
-        <br>
-
-
-        <div class="card">
-
-            <div class="card-header">
-                <strong>
-                    Balmuildy Assembly
-                </strong>
-            </div>
-
-            <div class="card-body">
-
-                <p>
-                    Your account is approved and ready to use.
-                </p>
-
-                <p style="color:var(--muted)">
-                    Use the navigation to access chats,
-                    groups, files and members.
-                </p>
-
-            </div>
-
-        </div>
-
     `;
 }
 
@@ -1828,23 +1613,15 @@ async function renderMembers(){
     const page =
         document.getElementById("page-content");
 
-
     page.innerHTML = `
-
-        <h1>
-            Members
-        </h1>
+        <h1>Members</h1>
 
         <div class="card">
-
             <div id="members-list">
                 Loading members...
             </div>
-
         </div>
-
     `;
-
 
     try{
 
@@ -1852,116 +1629,86 @@ async function renderMembers(){
             await getDocs(
                 query(
                     collection(db,"users"),
-                    where(
-                        "status",
-                        "==",
-                        "approved"
-                    )
+                    where("status","==","approved")
                 )
             );
-
 
         const container =
             document.getElementById("members-list");
 
-
         if(snapshot.empty){
 
-            container.innerHTML = `
-                <div class="empty">
-                    No members found.
-                </div>
-            `;
+            container.innerHTML =
+                `<div class="empty">No members found.</div>`;
 
             return;
         }
 
-
         let html = "";
 
+        snapshot.forEach(userDoc => {
 
-        snapshot.forEach(
-            userDoc => {
+            const user = userDoc.data();
 
-                const user =
-                    userDoc.data();
+            html += `
 
+                <div class="file-row">
 
-                html += `
+                    <div class="avatar">
+                        ${initials(user.displayName)}
+                    </div>
 
-                    <div class="file-row">
+                    <div class="file-info">
 
-                        <div class="avatar">
-                            ${initials(user.displayName)}
+                        <div class="file-name">
+                            ${escapeHTML(user.displayName)}
                         </div>
 
-                        <div class="file-info">
-
-                            <div class="file-name">
-                                ${escapeHTML(user.displayName)}
-                            </div>
-
-                            <div class="file-meta">
-                                ${escapeHTML(user.email)}
-                            </div>
-
+                        <div class="file-meta">
+                            ${escapeHTML(user.email)}
                         </div>
-
-                        ${
-                            user.role === "admin"
-                            ? `
-                                <span class="badge badge-admin">
-                                    ADMIN
-                                </span>
-                              `
-                            : ""
-                        }
-
-                        ${
-                            userDoc.id !== currentUser.uid
-                            ? `
-                                <button
-                                    class="btn btn-secondary"
-                                    onclick="window.startChat(${safeJson(userDoc.id)})"
-                                >
-                                    Chat
-                                </button>
-                              `
-                            : ""
-                        }
 
                     </div>
 
-                `;
-            }
-        );
+                    ${
+                        user.role === "admin"
+                        ? `
+                            <span class="badge badge-admin">
+                                ADMIN
+                            </span>
+                        `
+                        : ""
+                    }
 
+                    ${
+                        userDoc.id !== currentUser.uid
+                        ? `
+                            <button
+                                class="btn btn-secondary"
+                                onclick="window.startChat('${userDoc.id}')"
+                            >
+                                Chat
+                            </button>
+                        `
+                        : ""
+                    }
+
+                </div>
+            `;
+        });
 
         container.innerHTML = html;
 
-
     }catch(error){
 
-        console.error(
-            "MEMBERS ERROR:",
-            error
-        );
-
+        console.error(error);
 
         document.getElementById("members-list").innerHTML = `
-
             <div class="empty">
-
                 Unable to load members.
-
                 <br><br>
-
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
-
+                <small>${escapeHTML(error.message)}</small>
             </div>
-
         `;
     }
 }
@@ -1975,7 +1722,6 @@ async function renderChat(){
 
     const page =
         document.getElementById("page-content");
-
 
     page.innerHTML = `
 
@@ -1992,7 +1738,6 @@ async function renderChat(){
                 </div>
 
             </div>
-
 
             <div class="card chat-main">
 
@@ -2011,7 +1756,6 @@ async function renderChat(){
                         Select a chat to begin.
                     </div>
                 </div>
-
 
                 <form
                     class="chat-input"
@@ -2037,33 +1781,27 @@ async function renderChat(){
             </div>
 
         </div>
-
     `;
-
 
     document
         .getElementById("chat-form")
-        .addEventListener(
-            "submit",
-            sendMessage
-        );
-
+        .addEventListener("submit",sendMessage);
 
     await loadChats();
+
+    if(currentChatId){
+        openChat(
+            currentChatId,
+            currentChatName || "Chat"
+        );
+    }
 }
 
-
-/* ============================================================
-   LOAD CHATS
-   ============================================================ */
 
 async function loadChats(){
 
     const container =
-        document.getElementById(
-            "chat-list-content"
-        );
-
+        document.getElementById("chat-list-content");
 
     try{
 
@@ -2080,78 +1818,56 @@ async function loadChats(){
                 )
             );
 
-
         if(snapshot.empty){
 
             container.innerHTML = `
-
                 <div class="empty">
-
                     No chats yet.
-
                     <br><br>
-
                     Go to Members and select someone.
-
                 </div>
-
             `;
 
             return;
         }
 
-
         let html = "";
 
+        for(const chatDoc of snapshot.docs){
 
-        for(
-            const chatDoc of snapshot.docs
-        ){
-
-            const chat =
-                chatDoc.data();
-
+            const chat = chatDoc.data();
 
             const otherUid =
-                Array.isArray(chat.participants)
-                ? chat.participants.find(
-                    uid =>
-                        uid !== currentUser.uid
-                )
-                : null;
-
+                chat.participants.find(
+                    uid => uid !== currentUser.uid
+                );
 
             if(!otherUid){
                 continue;
             }
 
-
             const other =
                 await getDoc(
-                    doc(
-                        db,
-                        "users",
-                        otherUid
-                    )
+                    doc(db,"users",otherUid)
                 );
-
 
             if(!other.exists()){
                 continue;
             }
 
-
-            const user =
-                other.data();
-
+            const user = other.data();
 
             html += `
 
                 <div
-                    class="chat-item"
+                    class="chat-item ${
+                        currentChatId === chatDoc.id
+                        ? "active"
+                        : ""
+                    }"
                     onclick="window.openChat(
-                        ${safeJson(chatDoc.id)},
-                        ${safeJson(user.displayName || "Chat")}
+                        '${chatDoc.id}',
+                        '${escapeHTML(user.displayName)}'
                     )"
                 >
 
@@ -2160,54 +1876,33 @@ async function loadChats(){
                     </div>
 
                     <div>
-
                         <strong>
                             ${escapeHTML(user.displayName)}
                         </strong>
-
                     </div>
 
                 </div>
-
             `;
         }
-
 
         container.innerHTML =
             html ||
             `<div class="empty">No chats yet.</div>`;
 
-
     }catch(error){
 
-        console.error(
-            "CHAT ERROR:",
-            error
-        );
-
+        console.error(error);
 
         container.innerHTML = `
-
             <div class="empty">
-
                 Unable to load chats.
-
                 <br><br>
-
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
-
+                <small>${escapeHTML(error.message)}</small>
             </div>
-
         `;
     }
 }
 
-
-/* ============================================================
-   START CHAT
-   ============================================================ */
 
 async function startChat(otherUid){
 
@@ -2225,107 +1920,67 @@ async function startChat(otherUid){
                 )
             );
 
+        for(const item of snapshot.docs){
 
-        for(
-            const item of snapshot.docs
-        ){
-
-            const chat =
-                item.data();
-
+            const chat = item.data();
 
             if(
-                Array.isArray(chat.participants) &&
                 chat.participants.length === 2 &&
                 chat.participants.includes(otherUid)
             ){
 
                 const other =
                     await getDoc(
-                        doc(
-                            db,
-                            "users",
-                            otherUid
-                        )
+                        doc(db,"users",otherUid)
                     );
-
 
                 const name =
                     other.exists()
                     ? other.data().displayName
                     : "Chat";
 
+                currentChatId = item.id;
+                currentChatName = name;
 
                 navigate("chat");
-
-
-                setTimeout(
-                    () =>
-                        openChat(
-                            item.id,
-                            name
-                        ),
-                    250
-                );
-
 
                 return;
             }
         }
 
-
         const chatRef =
             await addDoc(
                 collection(db,"chats"),
                 {
-
                     participants:[
                         currentUser.uid,
                         otherUid
                     ],
-
                     type:"direct",
-
-                    createdAt:
-                        serverTimestamp(),
-
-                    lastMessage:""
-
+                    createdAt:serverTimestamp(),
+                    lastMessage:"",
+                    lastMessageAt:serverTimestamp()
                 }
             );
 
-
         const other =
             await getDoc(
-                doc(
-                    db,
-                    "users",
-                    otherUid
-                )
+                doc(db,"users",otherUid)
             );
 
+        currentChatId =
+            chatRef.id;
+
+        currentChatName =
+            other.exists()
+            ? other.data().displayName
+            : "Chat";
 
         navigate("chat");
 
-
-        setTimeout(
-            () =>
-                openChat(
-                    chatRef.id,
-                    other.exists()
-                    ? other.data().displayName
-                    : "Chat"
-                ),
-            250
-        );
-
-
     }catch(error){
 
-        console.error(
-            "START CHAT ERROR:",
-            error
-        );
+        console.error(error);
 
         toast(
             "Unable to start chat: " +
@@ -2335,49 +1990,31 @@ async function startChat(otherUid){
 }
 
 
-/* ============================================================
-   OPEN CHAT
-   ============================================================ */
-
 function openChat(chatId,name){
 
     currentChatId = chatId;
-
+    currentChatName = name;
 
     const header =
         document.getElementById("chat-header");
 
-
     if(header){
-        header.textContent = name || "Chat";
+        header.textContent = name;
     }
-
 
     const input =
         document.getElementById("message-input");
 
-
     const button =
         document.getElementById("send-message");
 
-
-    if(input){
-        input.disabled = false;
-    }
-
-
-    if(button){
-        button.disabled = false;
-    }
-
+    if(input) input.disabled = false;
+    if(button) button.disabled = false;
 
     if(currentChatUnsubscribe){
-
         currentChatUnsubscribe();
-
         currentChatUnsubscribe = null;
     }
-
 
     const messagesQuery =
         query(
@@ -2387,135 +2024,154 @@ function openChat(chatId,name){
                 chatId,
                 "messages"
             ),
-            orderBy(
-                "createdAt",
-                "asc"
-            )
+            orderBy("createdAt","asc")
         );
-
 
     currentChatUnsubscribe =
         onSnapshot(
             messagesQuery,
-
             snapshot => {
 
                 const container =
                     document.getElementById("messages");
 
-
                 if(!container){
                     return;
                 }
 
-
                 let html = "";
 
+                snapshot.forEach(messageDoc => {
 
-                snapshot.forEach(
-                    messageDoc => {
+                    const message =
+                        messageDoc.data();
 
-                        const message =
-                            messageDoc.data();
+                    const mine =
+                        message.senderId ===
+                        currentUser.uid;
 
+                    const deleted =
+                        message.deleted === true;
 
-                        const mine =
-                            message.senderId ===
-                            currentUser.uid;
+                    html += `
 
+                        <div
+                            class="message ${
+                                mine ? "mine" : ""
+                            }"
+                        >
 
-                        html += `
+                            <div class="avatar">
+                                ${initials(message.senderName)}
+                            </div>
 
-                            <div
-                                class="message ${mine ? "mine" : ""}"
-                            >
+                            <div class="message-bubble">
 
-                                <div class="avatar">
-                                    ${initials(message.senderName)}
-                                </div>
+                                <div class="message-name">
 
-                                <div class="message-bubble">
-
-                                    <div class="message-name">
-                                        ${escapeHTML(message.senderName)}
-                                    </div>
-
-                                    <div>
-                                        ${escapeHTML(message.text)}
-                                    </div>
-
-                                    <div class="message-time">
-                                        ${formatDate(message.createdAt)}
-                                    </div>
+                                    ${escapeHTML(message.senderName)}
 
                                 </div>
+
+                                <div class="${
+                                    deleted
+                                    ? "deleted-message"
+                                    : ""
+                                }">
+
+                                    ${
+                                        deleted
+                                        ? "This message was deleted"
+                                        : escapeHTML(message.text)
+                                    }
+
+                                    ${
+                                        message.edited && !deleted
+                                        ? `<span class="edited-tag">Edited</span>`
+                                        : ""
+                                    }
+
+                                </div>
+
+                                <div class="message-time">
+
+                                    ${formatDate(message.createdAt)}
+
+                                </div>
+
+                                ${
+                                    mine && !deleted
+                                    ? `
+                                        <div class="message-actions">
+
+                                            <button
+                                                onclick="window.editMessage(
+                                                    '${chatId}',
+                                                    '${messageDoc.id}',
+                                                    '${encodeURIComponent(message.text || "")}'
+                                                )"
+                                            >
+                                                Edit
+                                            </button>
+
+                                            <button
+                                                onclick="window.deleteMessage(
+                                                    '${chatId}',
+                                                    '${messageDoc.id}'
+                                                )"
+                                            >
+                                                Delete
+                                            </button>
+
+                                        </div>
+                                    `
+                                    : ""
+                                }
 
                             </div>
 
-                        `;
-                    }
-                );
-
+                        </div>
+                    `;
+                });
 
                 container.innerHTML =
                     html ||
                     `<div class="empty">No messages yet.</div>`;
 
-
                 container.scrollTop =
                     container.scrollHeight;
-
             },
-
             error => {
 
-                console.error(
-                    "MESSAGE LISTENER ERROR:",
-                    error
-                );
-
+                console.error(error);
 
                 toast(
-                    "Unable to load messages: " +
-                    error.message
+                    "Unable to load messages."
                 );
-
             }
         );
 }
 
 
-/* ============================================================
-   SEND MESSAGE
-   ============================================================ */
-
 async function sendMessage(event){
 
     event.preventDefault();
-
 
     if(!currentChatId){
         return;
     }
 
-
     const input =
-        document.getElementById(
-            "message-input"
-        );
-
+        document.getElementById("message-input");
 
     const text =
         input.value.trim();
-
 
     if(!text){
         return;
     }
 
-
     input.value = "";
-
 
     try{
 
@@ -2527,21 +2183,14 @@ async function sendMessage(event){
                 "messages"
             ),
             {
-
-                senderId:
-                    currentUser.uid,
-
-                senderName:
-                    currentProfile.displayName,
-
-                text:text,
-
-                createdAt:
-                    serverTimestamp()
-
+                senderId:currentUser.uid,
+                senderName:currentProfile.displayName,
+                text,
+                edited:false,
+                deleted:false,
+                createdAt:serverTimestamp()
             }
         );
-
 
         await updateDoc(
             doc(
@@ -2550,24 +2199,14 @@ async function sendMessage(event){
                 currentChatId
             ),
             {
-
-                lastMessage:
-                    text,
-
-                lastMessageAt:
-                    serverTimestamp()
-
+                lastMessage:text,
+                lastMessageAt:serverTimestamp()
             }
         );
 
-
     }catch(error){
 
-        console.error(
-            "SEND MESSAGE ERROR:",
-            error
-        );
-
+        console.error(error);
 
         toast(
             "Unable to send message: " +
@@ -2578,82 +2217,180 @@ async function sendMessage(event){
 
 
 /* ============================================================
-   FILES PAGE
+   EDIT MESSAGE
+   ============================================================ */
+
+async function editMessage(
+    chatId,
+    messageId,
+    encodedText
+){
+
+    const oldText =
+        decodeURIComponent(encodedText);
+
+    const newText =
+        prompt(
+            "Edit your message:",
+            oldText
+        );
+
+    if(newText === null){
+        return;
+    }
+
+    const text =
+        newText.trim();
+
+    if(!text){
+        toast("Message cannot be empty.");
+        return;
+    }
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "chats",
+                chatId,
+                "messages",
+                messageId
+            ),
+            {
+                text,
+                edited:true,
+                editedAt:serverTimestamp()
+            }
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        toast(
+            "Unable to edit message: " +
+            error.message
+        );
+    }
+}
+
+
+/* ============================================================
+   DELETE MESSAGE
+   ============================================================ */
+
+async function deleteMessage(
+    chatId,
+    messageId
+){
+
+    if(
+        !confirm(
+            "Delete this message?"
+        )
+    ){
+        return;
+    }
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "chats",
+                chatId,
+                "messages",
+                messageId
+            ),
+            {
+                text:"",
+                deleted:true,
+                deletedAt:serverTimestamp()
+            }
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        toast(
+            "Unable to delete message: " +
+            error.message
+        );
+    }
+}
+
+
+/* ============================================================
+   FILES
    ============================================================ */
 
 async function renderFiles(){
 
-    const page =
-        document.getElementById(
-            "page-content"
-        );
+    currentFolder =
+        currentFolder || "";
 
+    const page =
+        document.getElementById("page-content");
 
     page.innerHTML = `
 
-        <h1>
-            Files
-        </h1>
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:15px;
+            flex-wrap:wrap;
+            margin-bottom:15px;
+        ">
 
-        <div
-            class="card"
-            style="margin-bottom:15px"
-        >
+            <div>
 
-            <div class="card-body">
-
-                <h3>
-                    Upload a file
-                </h3>
+                <h1 style="margin:0">
+                    Files
+                </h1>
 
                 <p style="color:var(--muted)">
-                    Upload a file to the Balmuildy Assembly
-                    file server.
+                    Shared files and folders.
                 </p>
 
+            </div>
 
-                <div class="form-group">
+            <div style="
+                display:flex;
+                gap:8px;
+                flex-wrap:wrap;
+            ">
 
-                    <label for="file-upload">
-                        Select file
-                    </label>
-
-                    <input
-                        id="file-upload"
-                        type="file"
-                    >
-
-                </div>
-
+                <button
+                    class="btn btn-secondary"
+                    onclick="window.createFolder()"
+                >
+                    New folder
+                </button>
 
                 <button
                     class="btn btn-primary"
-                    id="upload-file-button"
-                    onclick="window.uploadFile()"
+                    onclick="window.showUpload()"
                 >
                     Upload file
                 </button>
-
-
-                <div
-                    id="upload-progress"
-                    style="
-                        margin-top:12px;
-                        color:var(--muted);
-                    "
-                ></div>
 
             </div>
 
         </div>
 
+        <div id="file-upload-panel"></div>
+
+        <div class="breadcrumbs" id="breadcrumbs"></div>
 
         <div class="card">
 
             <div class="card-header">
 
                 <strong>
-                    Shared files
+                    Current folder
                 </strong>
 
                 <button
@@ -2670,207 +2407,265 @@ async function renderFiles(){
             </div>
 
         </div>
-
     `;
 
-
+    renderBreadcrumbs();
     await loadFiles();
 }
 
 
-/* ============================================================
-   FILE AUTH TOKEN
-   ============================================================ */
+function renderBreadcrumbs(){
 
-async function getFileAuthToken(){
+    const container =
+        document.getElementById("breadcrumbs");
 
-    if(!currentUser){
-
-        throw new Error(
-            "You must be signed in to use files."
-        );
-
+    if(!container){
+        return;
     }
 
+    let html = `
+        <button onclick="window.openFolder('')">
+            Home
+        </button>
+    `;
 
-    return await currentUser.getIdToken();
+    if(currentFolder){
+
+        const parts =
+            currentFolder.split("/");
+
+        let path = "";
+
+        parts.forEach((part,index) => {
+
+            path +=
+                (path ? "/" : "") +
+                part;
+
+            html += `
+                <span>/</span>
+
+                <button
+                    onclick="window.openFolder(
+                        '${encodeURIComponent(path)}'
+                    )"
+                >
+                    ${escapeHTML(part)}
+                </button>
+            `;
+        });
+    }
+
+    container.innerHTML = html;
 }
 
-
-/* ============================================================
-   LOAD FILES
-   ============================================================ */
 
 async function loadFiles(){
 
     const container =
         document.getElementById("files-list");
 
-
     if(!container){
         return;
     }
 
-
-    container.innerHTML = `
-        <div class="empty">
-            Loading files...
-        </div>
-    `;
-
+    container.innerHTML =
+        `<div class="empty">Loading files...</div>`;
 
     try{
 
-        const token =
-            await getFileAuthToken();
+        const prefix =
+            filePath();
 
+        /*
+           Supabase lists objects in the current folder.
 
-        const response =
-            await fetch(
-                FILE_API + "/files",
+           We use a small amount of metadata from the
+           object list to distinguish files and folders.
+        */
+
+        const {
+            data,
+            error
+        } =
+            await supabase.storage
+            .from(SUPABASE_BUCKET)
+            .list(
+                currentFolder,
                 {
-                    method:"GET",
-                    headers:{
-                        "Authorization":
-                            "Bearer " + token
+                    limit:1000,
+                    offset:0,
+                    sortBy:{
+                        column:"name",
+                        order:"asc"
                     }
                 }
             );
 
+        if(error){
+            throw error;
+        }
 
-        if(!response.ok){
+        const objects =
+            Array.isArray(data)
+            ? data
+            : [];
 
-            let message =
-                "Unable to load files.";
+        let folders = [];
+        let files = [];
 
-            try{
+        objects.forEach(object => {
 
-                const data =
-                    await response.json();
+            /*
+               Supabase represents folders created through
+               Storage as folder entries when listing.
+            */
 
-                if(data?.error){
-                    message = data.error;
-                }
-
-            }catch{
-
+            if(
+                object.id === null &&
+                object.name
+            ){
+                folders.push(object);
+            }else if(object.name){
+                files.push(object);
             }
-
-            throw new Error(message);
-        }
-
-
-        const files =
-            await response.json();
-
-
-        if(
-            !Array.isArray(files) ||
-            files.length === 0
-        ){
-
-            container.innerHTML = `
-                <div class="empty">
-                    No files yet.
-                </div>
-            `;
-
-            return;
-        }
-
+        });
 
         let html = "";
 
+        folders.forEach(folder => {
 
-        files.forEach(
-            file => {
+            const path =
+                prefix + folder.name;
 
-                const fileName =
-                    file.name ||
-                    file.filename ||
-                    "Unnamed file";
+            html += `
 
+                <div class="folder-row">
 
-                const ownerName =
-                    file.ownerName ||
-                    "";
+                    <div
+                        class="folder-icon"
+                        onclick="window.openFolder(
+                            '${encodeURIComponent(path)}'
+                        )"
+                    >
+                        📁
+                    </div>
 
+                    <div
+                        class="file-info"
+                        onclick="window.openFolder(
+                            '${encodeURIComponent(path)}'
+                        )"
+                    >
 
-                const createdAt =
-                    file.createdAt
-                    ? new Date(
-                        file.createdAt
-                    ).toLocaleString()
-                    : "";
-
-
-                html += `
-
-                    <div class="file-row">
-
-                        <div class="file-icon">
-                            FILE
+                        <div class="file-name">
+                            ${escapeHTML(folder.name)}
                         </div>
 
-                        <div class="file-info">
-
-                            <div class="file-name">
-                                ${escapeHTML(fileName)}
-                            </div>
-
-                            <div class="file-meta">
-
-                                ${escapeHTML(ownerName)}
-
-                                ${
-                                    ownerName && createdAt
-                                    ? " · "
-                                    : ""
-                                }
-
-                                ${escapeHTML(createdAt)}
-
-                            </div>
-
+                        <div class="file-meta">
+                            Folder
                         </div>
 
+                    </div>
 
-                        <div class="file-actions">
+                    <button
+                        class="btn btn-danger"
+                        onclick="window.deleteFolder(
+                            '${encodeURIComponent(path)}'
+                        )"
+                    >
+                        Delete
+                    </button>
 
-                            <button
-                                class="btn btn-secondary"
-                                onclick="window.openFile(${safeJson(fileName)})"
-                            >
-                                Open
-                            </button>
+                </div>
+            `;
+        });
 
+        files.forEach(file => {
 
-                            <button
-                                class="btn btn-danger"
-                                onclick="window.deleteFile(${safeJson(fileName)})"
-                            >
-                                Delete
-                            </button>
+            const path =
+                prefix + file.name;
+
+            const url =
+                publicFileUrl(path);
+
+            html += `
+
+                <div class="file-row">
+
+                    <div class="file-icon">
+                        📄
+                    </div>
+
+                    <div class="file-info">
+
+                        <div class="file-name">
+                            ${escapeHTML(file.name)}
+                        </div>
+
+                        <div class="file-meta">
+
+                            ${
+                                file.metadata?.mimetype ||
+                                "File"
+                            }
+
+                            ${
+                                file.updated_at
+                                ? " · " +
+                                  new Date(
+                                      file.updated_at
+                                  ).toLocaleString()
+                                : ""
+                            }
 
                         </div>
 
                     </div>
 
-                `;
-            }
-        );
+                    <div class="file-actions">
 
+                        <button
+                            class="btn btn-secondary"
+                            onclick="window.openPublicFile(
+                                '${encodeURIComponent(path)}'
+                            )"
+                        >
+                            Open
+                        </button>
+
+                        <button
+                            class="btn btn-danger"
+                            onclick="window.deleteStoredFile(
+                                '${encodeURIComponent(path)}'
+                            )"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+        if(!html){
+
+            html = `
+                <div class="empty">
+                    This folder is empty.
+                </div>
+            `;
+        }
 
         container.innerHTML = html;
-
 
     }catch(error){
 
         console.error(
-            "FILES ERROR:",
+            "SUPABASE FILE ERROR:",
             error
         );
-
 
         container.innerHTML = `
 
@@ -2885,150 +2680,150 @@ async function loadFiles(){
                 </small>
 
             </div>
-
         `;
     }
 }
 
 
 /* ============================================================
-   UPLOAD FILE
+   FILE UPLOAD UI
+   ============================================================ */
+
+function showUpload(){
+
+    const panel =
+        document.getElementById(
+            "file-upload-panel"
+        );
+
+    if(!panel){
+        return;
+    }
+
+    panel.innerHTML = `
+
+        <div
+            class="card"
+            style="margin-bottom:15px"
+        >
+
+            <div class="card-body">
+
+                <h3 style="margin-top:0">
+                    Upload file
+                </h3>
+
+                <div class="form-group">
+
+                    <label>
+                        Select file
+                    </label>
+
+                    <input
+                        type="file"
+                        id="file-upload"
+                    >
+
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="window.uploadFile()"
+                >
+                    Upload
+                </button>
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="window.hideUpload()"
+                >
+                    Cancel
+                </button>
+
+                <div
+                    id="upload-progress"
+                    style="
+                        margin-top:10px;
+                        color:var(--muted);
+                    "
+                ></div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+function hideUpload(){
+
+    const panel =
+        document.getElementById(
+            "file-upload-panel"
+        );
+
+    if(panel){
+        panel.innerHTML = "";
+    }
+}
+
+
+/* ============================================================
+   UPLOAD
    ============================================================ */
 
 async function uploadFile(){
 
     const input =
-        document.getElementById(
-            "file-upload"
-        );
-
+        document.getElementById("file-upload");
 
     const progress =
-        document.getElementById(
-            "upload-progress"
-        );
+        document.getElementById("upload-progress");
 
+    if(!input || !input.files.length){
 
-    const button =
-        document.getElementById(
-            "upload-file-button"
-        );
-
-
-    if(!input){
-        return;
-    }
-
-
-    if(
-        !input.files ||
-        !input.files.length
-    ){
-
-        toast(
-            "Please select a file."
-        );
+        toast("Please select a file.");
 
         return;
     }
-
 
     const file =
         input.files[0];
 
+    const path =
+        filePath() +
+        file.name;
 
     try{
 
-        button.disabled = true;
-
-
         progress.textContent =
-            "Uploading " +
-            file.name +
-            "...";
+            "Uploading " + file.name + "...";
 
-
-        const token =
-            await getFileAuthToken();
-
-
-        const formData =
-            new FormData();
-
-
-        formData.append(
-            "file",
-            file
-        );
-
-
-        formData.append(
-            "ownerId",
-            currentUser.uid
-        );
-
-
-        formData.append(
-            "ownerName",
-            currentProfile.displayName
-        );
-
-
-        formData.append(
-            "ownerEmail",
-            currentProfile.email
-        );
-
-
-        const response =
-            await fetch(
-                FILE_API + "/upload",
+        const {
+            error
+        } =
+            await supabase.storage
+            .from(SUPABASE_BUCKET)
+            .upload(
+                path,
+                file,
                 {
-                    method:"POST",
-
-                    headers:{
-                        "Authorization":
-                            "Bearer " + token
-                    },
-
-                    body:formData
+                    cacheControl:"3600",
+                    upsert:false
                 }
             );
 
-
-        if(!response.ok){
-
-            let message =
-                "Upload failed.";
-
-            try{
-
-                const data =
-                    await response.json();
-
-                if(data?.error){
-                    message = data.error;
-                }
-
-            }catch{
-
-            }
-
-            throw new Error(message);
+        if(error){
+            throw error;
         }
-
-
-        input.value = "";
-
-        progress.textContent = "";
 
         toast(
             "File uploaded successfully."
         );
 
+        hideUpload();
 
         await loadFiles();
-
 
     }catch(error){
 
@@ -3037,21 +2832,134 @@ async function uploadFile(){
             error
         );
 
+        if(
+            error.message &&
+            error.message.toLowerCase().includes("duplicate")
+        ){
 
-        progress.textContent = "";
+            toast(
+                "A file with that name already exists."
+            );
+
+        }else{
+
+            toast(
+                "Unable to upload file: " +
+                error.message
+            );
+        }
+
+        if(progress){
+            progress.textContent = "";
+        }
+    }
+}
 
 
-        toast(
-            "Unable to upload file: " +
-            error.message
+/* ============================================================
+   CREATE FOLDER
+   ============================================================ */
+
+async function createFolder(){
+
+    const name =
+        prompt(
+            "Folder name:"
         );
 
-
-    }finally{
-
-        button.disabled = false;
-
+    if(!name){
+        return;
     }
+
+    const clean =
+        name
+        .trim()
+        .replace(/[\/\\]/g,"-");
+
+    if(!clean){
+        return;
+    }
+
+    const path =
+        filePath() +
+        clean +
+        "/.folder";
+
+    try{
+
+        const {
+            error
+        } =
+            await supabase.storage
+            .from(SUPABASE_BUCKET)
+            .upload(
+                path,
+                new Blob(
+                    [""],
+                    {type:"text/plain"}
+                ),
+                {
+                    upsert:false
+                }
+            );
+
+        if(error){
+            throw error;
+        }
+
+        toast(
+            "Folder created."
+        );
+
+        await loadFiles();
+
+    }catch(error){
+
+        console.error(error);
+
+        toast(
+            "Unable to create folder: " +
+            error.message
+        );
+    }
+}
+
+
+/* ============================================================
+   OPEN FOLDER
+   ============================================================ */
+
+function openFolder(encodedPath){
+
+    currentFolder =
+        safePath(
+            decodeURIComponent(encodedPath)
+        );
+
+    renderBreadcrumbs();
+    loadFiles();
+}
+
+
+/* ============================================================
+   OPEN PUBLIC FILE
+   ============================================================ */
+
+function openPublicFile(encodedPath){
+
+    const path =
+        safePath(
+            decodeURIComponent(encodedPath)
+        );
+
+    const url =
+        publicFileUrl(path);
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
 }
 
 
@@ -3059,77 +2967,43 @@ async function uploadFile(){
    DELETE FILE
    ============================================================ */
 
-async function deleteFile(fileName){
+async function deleteStoredFile(
+    encodedPath
+){
+
+    const path =
+        safePath(
+            decodeURIComponent(encodedPath)
+        );
 
     if(
         !confirm(
             "Delete this file?"
         )
     ){
-
         return;
     }
 
-
     try{
 
-        const token =
-            await getFileAuthToken();
+        const {
+            error
+        } =
+            await supabase.storage
+            .from(SUPABASE_BUCKET)
+            .remove([path]);
 
-
-        const response =
-            await fetch(
-                FILE_API +
-                "/files/" +
-                encodeURIComponent(fileName),
-                {
-                    method:"DELETE",
-
-                    headers:{
-                        "Authorization":
-                            "Bearer " + token
-                    }
-                }
-            );
-
-
-        if(!response.ok){
-
-            let message =
-                "Unable to delete file.";
-
-            try{
-
-                const data =
-                    await response.json();
-
-                if(data?.error){
-                    message = data.error;
-                }
-
-            }catch{
-
-            }
-
-            throw new Error(message);
+        if(error){
+            throw error;
         }
 
-
-        toast(
-            "File deleted."
-        );
-
+        toast("File deleted.");
 
         await loadFiles();
 
-
     }catch(error){
 
-        console.error(
-            "DELETE FILE ERROR:",
-            error
-        );
-
+        console.error(error);
 
         toast(
             "Unable to delete file: " +
@@ -3140,90 +3014,131 @@ async function deleteFile(fileName){
 
 
 /* ============================================================
-   OPEN FILE
+   DELETE FOLDER
    ============================================================ */
 
-async function openFile(fileName){
+async function deleteFolder(
+    encodedPath
+){
+
+    const folder =
+        safePath(
+            decodeURIComponent(encodedPath)
+        );
+
+    if(
+        !confirm(
+            "Delete this folder and everything inside it?"
+        )
+    ){
+        return;
+    }
 
     try{
 
-        const token =
-            await getFileAuthToken();
+        await deleteFolderRecursive(folder);
 
-
-        const response =
-            await fetch(
-                FILE_API +
-                "/files/" +
-                encodeURIComponent(fileName),
-                {
-                    method:"GET",
-
-                    headers:{
-                        "Authorization":
-                            "Bearer " + token
-                    }
-                }
-            );
-
-
-        if(!response.ok){
-
-            let message =
-                "Unable to open file.";
-
-            try{
-
-                const data =
-                    await response.json();
-
-                if(data?.error){
-                    message = data.error;
-                }
-
-            }catch{
-
-            }
-
-            throw new Error(message);
-        }
-
-
-        const blob =
-            await response.blob();
-
-
-        const url =
-            URL.createObjectURL(blob);
-
-
-        window.open(
-            url,
-            "_blank",
-            "noopener,noreferrer"
+        toast(
+            "Folder deleted."
         );
 
-
-        setTimeout(
-            () =>
-                URL.revokeObjectURL(url),
-            60000
-        );
-
+        await loadFiles();
 
     }catch(error){
 
-        console.error(
-            "OPEN FILE ERROR:",
-            error
-        );
-
+        console.error(error);
 
         toast(
-            "Unable to open file: " +
+            "Unable to delete folder: " +
             error.message
         );
     }
+}
+
+
+async function deleteFolderRecursive(
+    folder
+){
+
+    const {
+        data,
+        error
+    } =
+        await supabase.storage
+        .from(SUPABASE_BUCKET)
+        .list(
+            folder,
+            {
+                limit:1000,
+                offset:0
+            }
+        );
+
+    if(error){
+        throw error;
+    }
+
+    const objects =
+        Array.isArray(data)
+        ? data
+        : [];
+
+    const files = [];
+    const folders = [];
+
+    objects.forEach(object => {
+
+        if(
+            object.id === null &&
+            object.name
+        ){
+
+            folders.push(
+                folder + "/" + object.name
+            );
+
+        }else if(object.name){
+
+            files.push(
+                folder + "/" + object.name
+            );
+        }
+    });
+
+    for(
+        const childFolder
+        of folders
+    ){
+
+        await deleteFolderRecursive(
+            childFolder
+        );
+    }
+
+    if(files.length){
+
+        const {
+            error:removeError
+        } =
+            await supabase.storage
+            .from(SUPABASE_BUCKET)
+            .remove(files);
+
+        if(removeError){
+            throw removeError;
+        }
+    }
+
+    /*
+       Remove the folder marker.
+    */
+
+    const marker =
+        folder + "/.folder";
+
+    await supabase.storage
+        .from(SUPABASE_BUCKET)
+        .remove([marker]);
 }
 
 
@@ -3234,10 +3149,7 @@ async function openFile(fileName){
 async function renderGroups(){
 
     const page =
-        document.getElementById(
-            "page-content"
-        );
-
+        document.getElementById("page-content");
 
     page.innerHTML = `
 
@@ -3261,7 +3173,6 @@ async function renderGroups(){
 
             </div>
 
-
             <button
                 class="btn btn-primary"
                 onclick="window.createGroup()"
@@ -3271,16 +3182,13 @@ async function renderGroups(){
 
         </div>
 
-
         <div
             class="grid"
             id="groups-list"
         >
             Loading...
         </div>
-
     `;
-
 
     try{
 
@@ -3296,84 +3204,60 @@ async function renderGroups(){
                 )
             );
 
-
         const container =
-            document.getElementById(
-                "groups-list"
-            );
-
+            document.getElementById("groups-list");
 
         if(snapshot.empty){
 
             container.innerHTML = `
-
                 <div class="card">
-
                     <div class="empty">
-
                         You are not in any groups yet.
-
                     </div>
-
                 </div>
-
             `;
 
             return;
         }
 
-
         let html = "";
 
+        snapshot.forEach(groupDoc => {
 
-        snapshot.forEach(
-            groupDoc => {
+            const group =
+                groupDoc.data();
 
-                const group =
-                    groupDoc.data();
+            html += `
 
+                <div class="card group-card">
 
-                html += `
-
-                    <div class="card group-card">
-
-                        <div style="
-                            font-size:24px;
-                            margin-bottom:10px
-                        ">
-                            GROUP
-                        </div>
-
-                        <h3>
-                            ${escapeHTML(group.name)}
-                        </h3>
-
-                        <p style="color:var(--muted)">
-                            ${escapeHTML(group.description || "")}
-                        </p>
-
-                        <small>
-                            ${group.members?.length || 0}
-                            members
-                        </small>
-
+                    <div style="
+                        font-size:32px;
+                        margin-bottom:10px
+                    ">
+                        📁
                     </div>
 
-                `;
-            }
-        );
+                    <h3>
+                        ${escapeHTML(group.name)}
+                    </h3>
 
+                    <p style="color:var(--muted)">
+                        ${escapeHTML(group.description || "")}
+                    </p>
+
+                    <small>
+                        ${group.members?.length || 0}
+                        members
+                    </small>
+
+                </div>
+            `;
+        });
 
         container.innerHTML = html;
 
-
     }catch(error){
-
-        console.error(
-            "GROUPS ERROR:",
-            error
-        );
-
 
         toast(
             "Unable to load groups: " +
@@ -3383,68 +3267,36 @@ async function renderGroups(){
 }
 
 
-/* ============================================================
-   CREATE GROUP
-   ============================================================ */
-
 async function createGroup(){
 
     const name =
-        prompt(
-            "Group name:"
-        );
+        prompt("Group name:");
 
-
-    if(!name || !name.trim()){
+    if(!name){
         return;
     }
 
-
     const description =
-        prompt(
-            "Group description:"
-        ) || "";
-
+        prompt("Group description:") || "";
 
     try{
 
         await addDoc(
             collection(db,"groups"),
             {
-
                 name:name.trim(),
-
                 description:description.trim(),
-
-                ownerId:
-                    currentUser.uid,
-
-                members:[
-                    currentUser.uid
-                ],
-
-                createdAt:
-                    serverTimestamp()
-
+                ownerId:currentUser.uid,
+                members:[currentUser.uid],
+                createdAt:serverTimestamp()
             }
         );
 
+        toast("Group created.");
 
-        toast(
-            "Group created."
-        );
-
-
-        await renderGroups();
-
+        renderGroups();
 
     }catch(error){
-
-        console.error(
-            "CREATE GROUP ERROR:",
-            error
-        );
-
 
         toast(
             "Unable to create group: " +
@@ -3460,32 +3312,23 @@ async function createGroup(){
 
 async function renderAdmin(){
 
-    if(
-        currentProfile.role !== "admin"
-    ){
+    if(currentProfile.role !== "admin"){
 
         navigate("dashboard");
 
         return;
     }
 
-
     const page =
-        document.getElementById(
-            "page-content"
-        );
-
+        document.getElementById("page-content");
 
     page.innerHTML = `
 
-        <h1>
-            Administration
-        </h1>
+        <h1>Administration</h1>
 
         <p style="color:var(--muted)">
             Manage Balmuildy Assembly members.
         </p>
-
 
         <div class="card">
 
@@ -3499,9 +3342,7 @@ async function renderAdmin(){
 
         </div>
 
-
         <br>
-
 
         <div class="card">
 
@@ -3514,27 +3355,17 @@ async function renderAdmin(){
             </div>
 
         </div>
-
     `;
 
-
     await loadPendingUsers();
-
     await loadApprovedUsers();
 }
 
 
-/* ============================================================
-   LOAD PENDING USERS
-   ============================================================ */
-
 async function loadPendingUsers(){
 
     const container =
-        document.getElementById(
-            "pending-users"
-        );
-
+        document.getElementById("pending-users");
 
     try{
 
@@ -3542,124 +3373,84 @@ async function loadPendingUsers(){
             await getDocs(
                 query(
                     collection(db,"users"),
-                    where(
-                        "status",
-                        "==",
-                        "pending"
-                    )
+                    where("status","==","pending")
                 )
             );
 
-
         if(snapshot.empty){
 
-            container.innerHTML = `
-
-                <div class="empty">
-                    No pending accounts.
-                </div>
-
-            `;
+            container.innerHTML =
+                `<div class="empty">No pending accounts.</div>`;
 
             return;
         }
 
-
         let html = "";
 
+        snapshot.forEach(userDoc => {
 
-        snapshot.forEach(
-            userDoc => {
+            const user =
+                userDoc.data();
 
-                const user =
-                    userDoc.data();
+            html += `
 
+                <div class="file-row">
 
-                html += `
+                    <div class="avatar">
+                        ${initials(user.displayName)}
+                    </div>
 
-                    <div class="file-row">
+                    <div class="file-info">
 
-                        <div class="avatar">
-                            ${initials(user.displayName)}
+                        <div class="file-name">
+                            ${escapeHTML(user.displayName)}
                         </div>
 
-
-                        <div class="file-info">
-
-                            <div class="file-name">
-                                ${escapeHTML(user.displayName)}
-                            </div>
-
-                            <div class="file-meta">
-                                ${escapeHTML(user.email)}
-                            </div>
-
+                        <div class="file-meta">
+                            ${escapeHTML(user.email)}
                         </div>
-
-
-                        <button
-                            class="btn btn-success"
-                            onclick="window.approveUser(${safeJson(userDoc.id)})"
-                        >
-                            Approve
-                        </button>
-
-
-                        <button
-                            class="btn btn-danger"
-                            onclick="window.rejectUser(${safeJson(userDoc.id)})"
-                        >
-                            Reject
-                        </button>
 
                     </div>
 
-                `;
-            }
-        );
+                    <button
+                        class="btn btn-success"
+                        onclick="window.approveUser('${userDoc.id}')"
+                    >
+                        Approve
+                    </button>
 
+                    <button
+                        class="btn btn-danger"
+                        onclick="window.rejectUser('${userDoc.id}')"
+                    >
+                        Reject
+                    </button>
+
+                </div>
+            `;
+        });
 
         container.innerHTML = html;
 
-
     }catch(error){
 
-        console.error(
-            "PENDING USERS ERROR:",
-            error
-        );
-
+        console.error(error);
 
         container.innerHTML = `
-
             <div class="empty">
-
                 Unable to load pending users.
-
                 <br><br>
-
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
-
+                <small>${escapeHTML(error.message)}</small>
             </div>
-
         `;
     }
 }
 
-
-/* ============================================================
-   LOAD APPROVED USERS
-   ============================================================ */
 
 async function loadApprovedUsers(){
 
     const container =
-        document.getElementById(
-            "approved-users"
-        );
-
+        document.getElementById("approved-users");
 
     try{
 
@@ -3667,165 +3458,107 @@ async function loadApprovedUsers(){
             await getDocs(
                 query(
                     collection(db,"users"),
-                    where(
-                        "status",
-                        "==",
-                        "approved"
-                    )
+                    where("status","==","approved")
                 )
             );
 
-
         if(snapshot.empty){
 
-            container.innerHTML = `
-
-                <div class="empty">
-                    No approved members.
-                </div>
-
-            `;
+            container.innerHTML =
+                `<div class="empty">No approved members.</div>`;
 
             return;
         }
 
-
         let html = "";
 
+        snapshot.forEach(userDoc => {
 
-        snapshot.forEach(
-            userDoc => {
+            const user =
+                userDoc.data();
 
-                const user =
-                    userDoc.data();
+            html += `
 
+                <div class="file-row">
 
-                html += `
+                    <div class="avatar">
+                        ${initials(user.displayName)}
+                    </div>
 
-                    <div class="file-row">
+                    <div class="file-info">
 
-                        <div class="avatar">
-                            ${initials(user.displayName)}
+                        <div class="file-name">
+                            ${escapeHTML(user.displayName)}
                         </div>
 
-
-                        <div class="file-info">
-
-                            <div class="file-name">
-                                ${escapeHTML(user.displayName)}
-                            </div>
-
-                            <div class="file-meta">
-                                ${escapeHTML(user.email)}
-                            </div>
-
+                        <div class="file-meta">
+                            ${escapeHTML(user.email)}
                         </div>
-
-
-                        ${
-                            user.role === "admin"
-                            ? `
-                                <span class="badge badge-admin">
-                                    ADMIN
-                                </span>
-                              `
-                            : ""
-                        }
-
-
-                        ${
-                            userDoc.id !== currentUser.uid
-                            ? `
-                                <button
-                                    class="btn btn-danger"
-                                    onclick="window.removeMember(${safeJson(userDoc.id)})"
-                                >
-                                    Remove
-                                </button>
-                              `
-                            : ""
-                        }
 
                     </div>
 
-                `;
-            }
-        );
+                    ${
+                        user.role === "admin"
+                        ? `
+                            <span class="badge badge-admin">
+                                ADMIN
+                            </span>
+                        `
+                        : ""
+                    }
 
+                    ${
+                        userDoc.id !== currentUser.uid
+                        ? `
+                            <button
+                                class="btn btn-danger"
+                                onclick="window.removeMember('${userDoc.id}')"
+                            >
+                                Remove
+                            </button>
+                        `
+                        : ""
+                    }
+
+                </div>
+            `;
+        });
 
         container.innerHTML = html;
 
-
     }catch(error){
 
-        console.error(
-            "APPROVED USERS ERROR:",
-            error
-        );
-
+        console.error(error);
 
         container.innerHTML = `
-
             <div class="empty">
-
                 Unable to load approved members.
-
                 <br><br>
-
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
-
+                <small>${escapeHTML(error.message)}</small>
             </div>
-
         `;
     }
 }
 
-
-/* ============================================================
-   APPROVE USER
-   ============================================================ */
 
 async function approveUser(uid){
 
     try{
 
         await updateDoc(
-            doc(
-                db,
-                "users",
-                uid
-            ),
+            doc(db,"users",uid),
             {
-
                 status:"approved",
-
-                approvedBy:
-                    currentUser.uid,
-
-                approvedAt:
-                    serverTimestamp()
-
+                approvedBy:currentUser.uid,
+                approvedAt:serverTimestamp()
             }
         );
 
-
-        toast(
-            "Member approved."
-        );
-
+        toast("Member approved.");
 
         await renderAdmin();
 
-
     }catch(error){
-
-        console.error(
-            "APPROVE USER ERROR:",
-            error
-        );
-
 
         toast(
             "Unable to approve member: " +
@@ -3835,49 +3568,24 @@ async function approveUser(uid){
 }
 
 
-/* ============================================================
-   REJECT USER
-   ============================================================ */
-
 async function rejectUser(uid){
 
     try{
 
         await updateDoc(
-            doc(
-                db,
-                "users",
-                uid
-            ),
+            doc(db,"users",uid),
             {
-
                 status:"rejected",
-
-                rejectedBy:
-                    currentUser.uid,
-
-                rejectedAt:
-                    serverTimestamp()
-
+                rejectedBy:currentUser.uid,
+                rejectedAt:serverTimestamp()
             }
         );
 
-
-        toast(
-            "Account rejected."
-        );
-
+        toast("Account rejected.");
 
         await renderAdmin();
 
-
     }catch(error){
-
-        console.error(
-            "REJECT USER ERROR:",
-            error
-        );
-
 
         toast(
             "Unable to reject account: " +
@@ -3887,51 +3595,26 @@ async function rejectUser(uid){
 }
 
 
-/* ============================================================
-   REMOVE MEMBER
-   ============================================================ */
-
 async function removeMember(uid){
 
-    if(
-        !confirm(
-            "Remove this member?"
-        )
-    ){
-
+    if(!confirm("Remove this member?")){
         return;
     }
-
 
     try{
 
         await updateDoc(
-            doc(
-                db,
-                "users",
-                uid
-            ),
+            doc(db,"users",uid),
             {
                 status:"rejected"
             }
         );
 
-
-        toast(
-            "Member removed."
-        );
-
+        toast("Member removed.");
 
         await renderAdmin();
 
-
     }catch(error){
-
-        console.error(
-            "REMOVE MEMBER ERROR:",
-            error
-        );
-
 
         toast(
             "Unable to remove member: " +
@@ -3948,17 +3631,11 @@ async function removeMember(uid){
 function renderProfile(){
 
     const page =
-        document.getElementById(
-            "page-content"
-        );
-
+        document.getElementById("page-content");
 
     page.innerHTML = `
 
-        <h1>
-            My Profile
-        </h1>
-
+        <h1>My Profile</h1>
 
         <div class="card">
 
@@ -3982,7 +3659,6 @@ function renderProfile(){
                         ${initials(currentProfile.displayName)}
                     </div>
 
-
                     <div>
 
                         <h2 style="margin:0">
@@ -3997,10 +3673,9 @@ function renderProfile(){
 
                 </div>
 
-
                 <div class="form-group">
 
-                    <label for="profile-name">
+                    <label>
                         Display name
                     </label>
 
@@ -4012,7 +3687,6 @@ function renderProfile(){
 
                 </div>
 
-
                 <button
                     class="btn btn-primary"
                     onclick="window.saveProfile()"
@@ -4023,55 +3697,33 @@ function renderProfile(){
             </div>
 
         </div>
-
     `;
 }
 
 
-/* ============================================================
-   SAVE PROFILE
-   ============================================================ */
-
 async function saveProfile(){
 
     const input =
-        document.getElementById(
-            "profile-name"
-        );
-
-
-    if(!input){
-        return;
-    }
-
+        document.getElementById("profile-name");
 
     const name =
         input.value.trim();
 
-
     if(!name){
 
-        toast(
-            "Enter a display name."
-        );
+        toast("Enter a display name.");
 
         return;
     }
 
-
     try{
 
         await updateDoc(
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            ),
+            doc(db,"users",currentUser.uid),
             {
                 displayName:name
             }
         );
-
 
         await updateProfile(
             currentUser,
@@ -4080,26 +3732,14 @@ async function saveProfile(){
             }
         );
 
-
         currentProfile.displayName =
             name;
 
-
-        toast(
-            "Profile updated."
-        );
-
+        toast("Profile updated.");
 
         renderShell();
 
-
     }catch(error){
-
-        console.error(
-            "SAVE PROFILE ERROR:",
-            error
-        );
-
 
         toast(
             "Unable to update profile: " +
@@ -4119,15 +3759,12 @@ function globalSearch(event){
         return;
     }
 
-
     const value =
         event.target.value.trim();
-
 
     if(!value){
         return;
     }
-
 
     toast(
         "Search: " + value
@@ -4136,22 +3773,16 @@ function globalSearch(event){
 
 
 /* ============================================================
-   MOBILE SIDEBAR
+   MOBILE
    ============================================================ */
 
 function toggleSidebar(){
 
     const sidebar =
-        document.getElementById(
-            "sidebar"
-        );
-
+        document.getElementById("sidebar");
 
     if(sidebar){
-
-        sidebar.classList.toggle(
-            "open"
-        );
+        sidebar.classList.toggle("open");
     }
 }
 
@@ -4162,36 +3793,26 @@ function toggleSidebar(){
 
 async function logout(){
 
-    try{
+    if(currentChatUnsubscribe){
 
-        if(currentChatUnsubscribe){
-
-            currentChatUnsubscribe();
-
-            currentChatUnsubscribe = null;
-
-        }
-
-
-        currentChatId = null;
-
-
-        await signOut(auth);
-
-
-    }catch(error){
-
-        console.error(
-            "LOGOUT ERROR:",
-            error
-        );
-
-
-        toast(
-            "Unable to sign out: " +
-            error.message
-        );
+        currentChatUnsubscribe();
+        currentChatUnsubscribe = null;
     }
+
+    if(currentFilesUnsubscribe){
+
+        currentFilesUnsubscribe();
+        currentFilesUnsubscribe = null;
+    }
+
+    currentChatId = null;
+    currentChatName = null;
+    currentFolder = "";
+
+    currentUser = null;
+    currentProfile = null;
+
+    await signOut(auth);
 }
 
 
@@ -4199,53 +3820,38 @@ async function logout(){
    GLOBAL FUNCTIONS
    ============================================================ */
 
-window.navigate =
-    navigate;
+window.navigate = navigate;
+window.logout = logout;
+window.toggleSidebar = toggleSidebar;
 
-window.logout =
-    logout;
+window.startChat = startChat;
+window.openChat = openChat;
+window.sendMessage = sendMessage;
+window.editMessage = editMessage;
+window.deleteMessage = deleteMessage;
 
-window.toggleSidebar =
-    toggleSidebar;
+window.renderFiles = renderFiles;
+window.loadFiles = loadFiles;
 
-window.startChat =
-    startChat;
+window.showUpload = showUpload;
+window.hideUpload = hideUpload;
+window.uploadFile = uploadFile;
 
-window.openChat =
-    openChat;
+window.createFolder = createFolder;
+window.openFolder = openFolder;
 
-window.sendMessage =
-    sendMessage;
+window.openPublicFile = openPublicFile;
+window.deleteStoredFile = deleteStoredFile;
+window.deleteFolder = deleteFolder;
 
-window.uploadFile =
-    uploadFile;
+window.createGroup = createGroup;
 
-window.loadFiles =
-    loadFiles;
+window.approveUser = approveUser;
+window.rejectUser = rejectUser;
+window.removeMember = removeMember;
 
-window.deleteFile =
-    deleteFile;
-
-window.openFile =
-    openFile;
-
-window.createGroup =
-    createGroup;
-
-window.approveUser =
-    approveUser;
-
-window.rejectUser =
-    rejectUser;
-
-window.removeMember =
-    removeMember;
-
-window.saveProfile =
-    saveProfile;
-
-window.globalSearch =
-    globalSearch;
+window.saveProfile = saveProfile;
+window.globalSearch = globalSearch;
 
 
 /* ============================================================
@@ -4254,44 +3860,27 @@ window.globalSearch =
 
 onAuthStateChanged(
     auth,
-
     async user => {
 
-        currentUser =
-            user;
-
+        currentUser = user;
 
         if(!user){
 
-            currentProfile =
-                null;
-
-            currentChatId =
-                null;
+            currentProfile = null;
 
             renderAuth();
 
             return;
         }
 
-
         try{
 
             currentProfile =
                 await loadProfile();
 
-
             if(!currentProfile){
 
-                console.error(
-                    "No Firestore user document found for:",
-                    user.uid
-                );
-
-
-                document.getElementById(
-                    "root"
-                ).innerHTML = `
+                document.getElementById("root").innerHTML = `
 
                     <div class="auth-screen">
 
@@ -4300,7 +3889,6 @@ onAuthStateChanged(
                             <img
                                 class="auth-logo"
                                 src="https://balmuildyprimaryschool.tdf1.uk/balmuildy.png"
-                                alt="Balmuildy logo"
                             >
 
                             <div class="auth-title">
@@ -4312,12 +3900,10 @@ onAuthStateChanged(
                                 color:var(--muted);
                                 line-height:1.6
                             ">
-
                                 Your Firebase Authentication
                                 account exists, but your Balmuildy
                                 Assembly Firestore profile could
                                 not be found.
-
                             </p>
 
                             <button
@@ -4331,35 +3917,19 @@ onAuthStateChanged(
                         </div>
 
                     </div>
-
                 `;
 
                 return;
             }
 
-
             const hash =
-                location.hash.replace(
-                    "#",
-                    ""
-                );
-
+                location.hash.replace("#","");
 
             if(hash){
-
-                currentView =
-                    hash;
-
-            }else{
-
-                currentView =
-                    "dashboard";
-
+                currentView = hash;
             }
 
-
             renderApp();
-
 
         }catch(error){
 
@@ -4368,10 +3938,7 @@ onAuthStateChanged(
                 error
             );
 
-
-            document.getElementById(
-                "root"
-            ).innerHTML = `
+            document.getElementById("root").innerHTML = `
 
                 <div class="auth-screen">
 
@@ -4383,8 +3950,7 @@ onAuthStateChanged(
 
                         <p style="
                             color:var(--muted);
-                            text-align:center;
-                            line-height:1.6
+                            text-align:center
                         ">
                             ${escapeHTML(error.message)}
                         </p>
@@ -4400,10 +3966,8 @@ onAuthStateChanged(
                     </div>
 
                 </div>
-
             `;
         }
-
     }
 );
 
@@ -4413,13 +3977,7 @@ onAuthStateChanged(
    ============================================================ */
 
 if(!location.hash){
-
-    history.replaceState(
-        null,
-        "",
-        "#dashboard"
-    );
-
+    location.hash = "dashboard";
 }
 
 </script>
